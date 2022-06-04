@@ -239,15 +239,16 @@ void BgMoriHineri_DrawHallAndRoom(Actor* thisx, PlayState* play) {
     if ((this->actionFunc == func_808A3C8C) && (this->dyna.actor.shape.rot.z != 0)) {
         func_80093D18(play->state.gfxCtx);
         if (this->dyna.actor.params == 0) {
-            Matrix_Translate(-1761.0f, 1278.0f, -1821.0f, MTXMODE_NEW);
+            Matrix_Translate(119.0f, 409.0f, 60.0f, MTXMODE_NEW);
         } else {
             Matrix_Translate(1999.0f, 1278.0f, -1821.0f, MTXMODE_NEW);
         }
-        Matrix_RotateZYX(0, -0x8000, this->dyna.actor.shape.rot.z, MTXMODE_APPLY);
-        Matrix_Translate(0.0f, -50.0f, 0.0f, MTXMODE_APPLY);
+        Matrix_RotateZYX(0x4000, 0x8000, -0x8000+(this->dyna.actor.shape.rot.z), MTXMODE_APPLY);
+        Matrix_Translate(-26.0f, 5.0f, -50.0f, MTXMODE_APPLY);
+        Matrix_Scale(0.01f, 0.01f, 0.01f, MTXMODE_APPLY);
         gSPMatrix(POLY_OPA_DISP++, Matrix_NewMtx(play->state.gfxCtx, "../z_bg_mori_hineri.c", 652),
                   G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-        gSPDisplayList(POLY_OPA_DISP++, gDungeonDoorDL);
+        gSPDisplayList(POLY_OPA_DISP++, gDoorLeftDL);
     }
     if ((this->boxObjIdx > 0) && ((this->boxObjIdx = Object_GetIndex(&play->objectCtx, OBJECT_BOX)) > 0) &&
         Object_IsLoaded(&play->objectCtx, this->boxObjIdx)) {
