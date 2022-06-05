@@ -20,6 +20,8 @@ typedef struct BgSpot08Iceblock {
     /* 0x0192 */ s16 bobIncrFast;
     /* 0x0194 */ f32 sinkOffset;
     /* 0x0198 */ f32 bobOffset;
+                u32  timer;
+                f32 scale;
 } BgSpot08Iceblock; // size = 0x019C
 
 // Params

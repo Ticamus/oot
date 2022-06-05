@@ -250,6 +250,23 @@ void BgSpot08Iceblock_Roll(BgSpot08Iceblock* this, PlayState* play) {
     Matrix_MtxFToYXZRotS(&mtx, &this->dyna.actor.shape.rot, 0);
 }
 
+
+void BgSpot08Iceblock_SpawnFromArrow(BgSpot08Iceblock* this, PlayState* play) {
+
+    if (this->scale < 0.05f) {
+        Actor_Kill(&this->dyna.actor);
+        this->scale = 0.05f;
+        Actor_SetScale(&this->dyna.actor, this->scale);
+        this->actionFunc = BgSpot08Iceblock_SpawnFromArrow;
+    }
+    else {
+        BgSpot08Iceblock_SetupFloatRotating(this);
+    }
+}
+
+
+
+
 void BgSpot08Iceblock_SpawnTwinFloe(BgSpot08Iceblock* this, PlayState* play) {
     s32 pad[2];
     f32 sin;
@@ -282,6 +299,10 @@ static InitChainEntry sInitChain[] = {
 void BgSpot08Iceblock_Init(Actor* thisx, PlayState* play) {
     BgSpot08Iceblock* this = (BgSpot08Iceblock*)thisx;
     CollisionHeader* colHeader;
+    Vec3f pos;
+    Vec3f vel = { 0.0f, 1.0f, 0.0f };
+    Vec3f accel = { 0.0f, 0.0f, 0.0f };
+    f32 f0;
 
     // "spot08 ice floe"
     osSyncPrintf("(spot08 流氷)(arg_data 0x%04x)\n", this->dyna.actor.params);
@@ -305,13 +326,15 @@ void BgSpot08Iceblock_Init(Actor* thisx, PlayState* play) {
             BgSpot08Iceblock_InitDynaPoly(this, play, colHeader, DPM_UNK);
             break;
     }
-
+    /*
     if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
         Actor_Kill(&this->dyna.actor);
         return;
-    }
+    }*/
 
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
+    this->timer = -1;
+    this->scale = 0.000f;
 
     switch (this->dyna.actor.params & 0xF0) {
         case 0:
@@ -321,7 +344,15 @@ void BgSpot08Iceblock_Init(Actor* thisx, PlayState* play) {
             Actor_SetScale(&this->dyna.actor, 0.1f);
             break;
         case 0x20:
-            Actor_SetScale(&this->dyna.actor, 0.05f);
+            f0 = 2.0f * Rand_ZeroOne() - 1.0f;
+            vel.x = f0 * 1.6f * Math_SinS(this->dyna.actor.world.rot.y);
+            vel.y = 1.8f;
+            vel.z = f0 * 1.6f * Math_CosS(this->dyna.actor.world.rot.y);
+            pos = this->dyna.actor.world.pos;
+            EffectSsIceSmoke_Spawn(play, &this->dyna.actor.world.pos, &vel, &accel, 1500);
+            Audio_PlayActorSound2(&this->dyna.actor, NA_SE_PL_FREEZE_S);
+            this->timer = 300; // = 300 = 15 secondes
+            //Actor_SetScale(&this->dyna.actor, 0.05f);
             break;
     }
 
@@ -337,6 +368,7 @@ void BgSpot08Iceblock_Init(Actor* thisx, PlayState* play) {
             break;
         case 2:
             BgSpot08Iceblock_SetupFloatRotating(this);
+            //BgSpot08Iceblock_SetupSpawnFromArrow(this, play);
             break;
         case 3:
             BgSpot08Iceblock_SpawnTwinFloe(this, play);
@@ -425,6 +457,27 @@ void BgSpot08Iceblock_Update(Actor* thisx, PlayState* play) {
     this->bobPhaseFast += this->bobIncrFast;
     if (this->actionFunc != NULL) {
         this->actionFunc(this, play);
+    }
+
+    if ((this->dyna.actor.params & 0xF0) == 0x20) {
+        if ((this->scale < 0.05f) && (this->timer > 0)) {
+            this->scale += 0.005f;
+            Actor_SetScale(&this->dyna.actor, this->scale);
+        } 
+        
+        if (this->timer > 0) {
+            this->timer--;
+            if (this->timer == 0) {
+                Audio_PlayActorSound2(&this->dyna.actor, NA_SE_EV_ICE_MELT);
+            }
+        }
+        else if (this->scale > 0.0f) {
+            this->scale -= 0.002f;
+            Actor_SetScale(&this->dyna.actor, this->scale);
+        }
+        else {
+            Actor_Kill(&this->dyna.actor);
+        }
     }
 }
 

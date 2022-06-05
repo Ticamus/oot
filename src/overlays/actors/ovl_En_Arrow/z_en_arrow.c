@@ -238,6 +238,53 @@ void EnArrow_CarryActor(EnArrow* this, PlayState* play) {
     }
 }
 
+void EnArrow_WaterCollision(EnArrow* this, PlayState* play){
+    WaterBox* waterBoxa;
+    f32 wypos = this->actor.world.pos.y;
+    Vec3f pos;
+    f32 temp_f0;
+
+    if (WaterBox_GetSurface1(play, &play->colCtx, this->actor.world.pos.x, this->actor.world.pos.z, &wypos,
+        &waterBoxa) && (this->actor.world.pos.y < wypos) && !(this->actor.bgCheckFlags & 0x20)) {
+
+        this->actor.bgCheckFlags |= 0x20;
+        Math_Vec3f_Diff(&this->actor.world.pos, &this->actor.home.pos, &pos);
+        if (pos.y != 0.0f) {
+            temp_f0 = sqrtf(SQ(pos.x) + SQ(pos.z));
+            if (temp_f0 != 0.0f) {
+                temp_f0 = (((wypos - this->actor.home.pos.y) / pos.y) * temp_f0) / temp_f0;
+            }
+            pos.x = this->actor.home.pos.x + (pos.x * temp_f0);
+            pos.y = wypos;
+            pos.z = this->actor.home.pos.z + (pos.z * temp_f0);
+            EffectSsGSplash_Spawn(play, &pos, NULL, NULL, 0, 300);
+        }
+        SoundSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EV_DIVE_INTO_WATER_L);
+
+        EffectSsGRipple_Spawn(play, &pos, 100, 500, 0);
+        EffectSsGRipple_Spawn(play, &pos, 100, 500, 4);
+        EffectSsGRipple_Spawn(play, &pos, 100, 500, 8);
+
+        if ((this->actor.params == ARROW_ICE) || (this->actor.params == ARROW_FIRE)) {
+            if ((this->actor.params == ARROW_ICE) && (func_809B4640 != this->actionFunc)) {
+                Actor_Spawn(&play->actorCtx, play, ACTOR_BG_SPOT08_ICEBLOCK, pos.x, pos.y, pos.z, 0, 0, 0, 0x0020);
+                Actor_Kill(&this->actor);
+                return;
+            }
+
+            this->actor.params = ARROW_NORMAL;
+            this->collider.info.toucher.dmgFlags = 0x20;
+
+            if (this->actor.child != NULL) {
+                Actor_Kill(this->actor.child);
+                return;
+            }
+
+            //func_80115D5C(&globalCtx->state);
+        }
+    }
+}
+
 void EnArrow_Fly(EnArrow* this, PlayState* play) {
     CollisionPoly* hitPoly;
     s32 bgId;
@@ -324,6 +371,7 @@ void EnArrow_Fly(EnArrow* this, PlayState* play) {
             }
         }
     } else {
+        EnArrow_WaterCollision(this, play);
         Math_Vec3f_Copy(&this->unk_210, &this->actor.world.pos);
         Actor_MoveForward(&this->actor);
 
@@ -410,6 +458,7 @@ void EnArrow_Update(Actor* thisx, PlayState* play) {
         // spawn dust for the flame
         func_8002836C(play, &this->unk_21C, &velocity, &accel, &primColor, &envColor, 100, 0, 8);
     }
+    Math_Vec3f_Copy(&this->actor.home.pos, &this->actor.prevPos);
 }
 
 void func_809B4800(EnArrow* this, PlayState* play) {
