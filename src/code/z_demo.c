@@ -53,7 +53,7 @@ u8 sTitleCsState = 0;
 
 EntranceCutscene sEntranceCutsceneTable[] = {
     { ENTR_SPOT00_3, 2, EVENTCHKINF_A0, gHyruleFieldIntroCs },
-    { ENTR_SPOT16_0, 2, EVENTCHKINF_A1, gDMTIntroCs },
+    { ENTR_MORIBOSSROOM_0, 2, EVENTCHKINF_A1, gKakarikoVillageIntroCs },
     { ENTR_SPOT01_0, 2, EVENTCHKINF_A3, gKakarikoVillageIntroCs },
     { ENTR_SPOT07_0, 2, EVENTCHKINF_A4, gZorasDomainIntroCs },
     { ENTR_SPOT15_0, 1, EVENTCHKINF_A5, gHyruleCastleIntroCs },

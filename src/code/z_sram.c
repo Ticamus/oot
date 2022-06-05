@@ -279,7 +279,7 @@ void Sram_InitDebugSave(void) {
     gSaveContext.horseData.pos.y = 72;
     gSaveContext.horseData.pos.z = 5497;
     gSaveContext.horseData.angle = -0x6AD9;
-    gSaveContext.infTable[0] |= 0x5009;
+    //gSaveContext.infTable[0] |= 0x5009;
     gSaveContext.eventChkInf[0] |= 0x123F;
     SET_EVENTCHKINF(EVENTCHKINF_80);
     SET_EVENTCHKINF(EVENTCHKINF_C4);

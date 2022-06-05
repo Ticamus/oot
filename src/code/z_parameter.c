@@ -2610,22 +2610,67 @@ void Magic_DrawMeter(PlayState* play) {
         }
 
         Gfx_SetupDL_39Overlay(play->state.gfxCtx);
-
-        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha);
         gDPSetEnvColor(OVERLAY_DISP++, 100, 50, 50, 255);
 
+        if (GET_EVENTCHKINF(0xA1)) { // Shadow
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, interfaceCtx->magicAlpha/4);
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterEndTex, 8, 16, R_MAGIC_METER_X + 2, magicMeterY + 2, 8, 16,
+                                1 << 10, 1 << 10);
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, R_MAGIC_METER_X + 10, magicMeterY + 2,
+                                        gSaveContext.magicCapacity, 16, 1 << 10, 1 << 10);
+            gDPLoadTextureBlock(OVERLAY_DISP++, gMagicMeterEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 16, 0,
+                                G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+                                
+            gSPTextureRectangle(OVERLAY_DISP++, ((R_MAGIC_METER_X + gSaveContext.magicCapacity) + 8 + 2) << 2, ((magicMeterY + 2) << 2),
+                                ((R_MAGIC_METER_X + gSaveContext.magicCapacity) + 16 + 2) << 2, (magicMeterY + 16 + 2) << 2,
+                                G_TX_RENDERTILE, 256, 0, 1 << 10, 1 << 10);
+        }
+
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha);
+        
         OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterEndTex, 8, 16, R_MAGIC_METER_X, magicMeterY, 8, 16,
-                                      1 << 10, 1 << 10);
-
+                            1 << 10, 1 << 10);
         OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, R_MAGIC_METER_X + 8, magicMeterY,
-                                      gSaveContext.magicCapacity, 16, 1 << 10, 1 << 10);
-
+                                    gSaveContext.magicCapacity, 16, 1 << 10, 1 << 10);
         gDPLoadTextureBlock(OVERLAY_DISP++, gMagicMeterEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 16, 0,
                             G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-
+                            
         gSPTextureRectangle(OVERLAY_DISP++, ((R_MAGIC_METER_X + gSaveContext.magicCapacity) + 8) << 2, magicMeterY << 2,
                             ((R_MAGIC_METER_X + gSaveContext.magicCapacity) + 16) << 2, (magicMeterY + 16) << 2,
                             G_TX_RENDERTILE, 256, 0, 1 << 10, 1 << 10);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         gDPPipeSync(OVERLAY_DISP++);
         gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE, PRIMITIVE,
@@ -2735,21 +2780,55 @@ void Interface_DrawItemButtons(PlayState* play) {
     // Also loads the Item Button Texture reused by other buttons afterwards
     gDPPipeSync(OVERLAY_DISP++);
     gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_B_BTN_COLOR(0), R_B_BTN_COLOR(1), R_B_BTN_COLOR(2), interfaceCtx->bAlpha);
     gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
-    OVERLAY_DISP =
+
+    if (GET_EVENTCHKINF(0xA1)) { // Shadow
+        R_C_BTN_COLOR(1) = 240;
+        R_B_BTN_COLOR(1) = 100;
+        R_B_BTN_COLOR(2) = 100;
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, interfaceCtx->bAlpha/4);
+        OVERLAY_DISP =
+        Gfx_TextureIA8(OVERLAY_DISP, gButtonBackgroundTexMM, 32, 32, R_ITEM_BTN_X(0) + 2, R_ITEM_BTN_Y(0) + 2,
+                       R_ITEM_BTN_WIDTH(0) + 2, R_ITEM_BTN_WIDTH(0) + 2, R_ITEM_BTN_DD(0) << 1, R_ITEM_BTN_DD(0) << 1);
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_B_BTN_COLOR(0), R_B_BTN_COLOR(1), R_B_BTN_COLOR(2), interfaceCtx->bAlpha);
+        gSPTextureRectangle(OVERLAY_DISP++, (R_ITEM_BTN_X(0) << 2), (R_ITEM_BTN_Y(0) << 2),
+                        (R_ITEM_BTN_X(0) + R_ITEM_BTN_WIDTH(0)) << 2, (R_ITEM_BTN_Y(0) + R_ITEM_BTN_WIDTH(0)) << 2,
+                        G_TX_RENDERTILE, 0, 0, R_ITEM_BTN_DD(0) << 1, R_ITEM_BTN_DD(0) << 1);
+    }
+    else {
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_B_BTN_COLOR(0), R_B_BTN_COLOR(1), R_B_BTN_COLOR(2), interfaceCtx->bAlpha);
+        OVERLAY_DISP =
         Gfx_TextureIA8(OVERLAY_DISP, gButtonBackgroundTex, 32, 32, R_ITEM_BTN_X(0), R_ITEM_BTN_Y(0),
                        R_ITEM_BTN_WIDTH(0), R_ITEM_BTN_WIDTH(0), R_ITEM_BTN_DD(0) << 1, R_ITEM_BTN_DD(0) << 1);
+    }
 
     // C-Left Button Color & Texture
     gDPPipeSync(OVERLAY_DISP++);
+    if (GET_EVENTCHKINF(0xA1)) { // Shadow
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, interfaceCtx->cLeftAlpha/4);
+    gSPTextureRectangle(OVERLAY_DISP++, ((R_ITEM_BTN_X(1) + 2) << 2), ((R_ITEM_BTN_Y(1) + 2) << 2),
+                        (R_ITEM_BTN_X(1) + R_ITEM_BTN_WIDTH(1) + 2) << 2, (R_ITEM_BTN_Y(1) + R_ITEM_BTN_WIDTH(1) + 2) << 2,
+                        G_TX_RENDERTILE, 0, 0, R_ITEM_BTN_DD(1) << 1, R_ITEM_BTN_DD(1) << 1);
+    }
+
+    // Button
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                     interfaceCtx->cLeftAlpha);
     gSPTextureRectangle(OVERLAY_DISP++, R_ITEM_BTN_X(1) << 2, R_ITEM_BTN_Y(1) << 2,
                         (R_ITEM_BTN_X(1) + R_ITEM_BTN_WIDTH(1)) << 2, (R_ITEM_BTN_Y(1) + R_ITEM_BTN_WIDTH(1)) << 2,
                         G_TX_RENDERTILE, 0, 0, R_ITEM_BTN_DD(1) << 1, R_ITEM_BTN_DD(1) << 1);
 
+                        
+
     // C-Down Button Color & Texture
+    if (GET_EVENTCHKINF(0xA1)) { // Shadow
+                    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, interfaceCtx->cDownAlpha/4);
+    gSPTextureRectangle(OVERLAY_DISP++, (R_ITEM_BTN_X(2) + 2) << 2, (R_ITEM_BTN_Y(2) + 2) << 2,
+                        (R_ITEM_BTN_X(2) + R_ITEM_BTN_WIDTH(2) + 2) << 2, (R_ITEM_BTN_Y(2) + R_ITEM_BTN_WIDTH(2) + 2) << 2,
+                        G_TX_RENDERTILE, 0, 0, R_ITEM_BTN_DD(2) << 1, R_ITEM_BTN_DD(2) << 1);
+    }
+
+    // Button
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                     interfaceCtx->cDownAlpha);
     gSPTextureRectangle(OVERLAY_DISP++, R_ITEM_BTN_X(2) << 2, R_ITEM_BTN_Y(2) << 2,
@@ -2757,6 +2836,14 @@ void Interface_DrawItemButtons(PlayState* play) {
                         G_TX_RENDERTILE, 0, 0, R_ITEM_BTN_DD(2) << 1, R_ITEM_BTN_DD(2) << 1);
 
     // C-Right Button Color & Texture
+    if (GET_EVENTCHKINF(0xA1)) { // Shadow
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, interfaceCtx->cRightAlpha/4);
+    gSPTextureRectangle(OVERLAY_DISP++, ((R_ITEM_BTN_X(3) + 2) << 2), ((R_ITEM_BTN_Y(3) + 2) << 2),
+                        ((R_ITEM_BTN_X(3) + R_ITEM_BTN_WIDTH(3) + 2) << 2), ((R_ITEM_BTN_Y(3) + R_ITEM_BTN_WIDTH(3) + 2) << 2),
+                        G_TX_RENDERTILE, 0, 0, R_ITEM_BTN_DD(3) << 1, R_ITEM_BTN_DD(3) << 1);
+    }
+
+    // Button
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                     interfaceCtx->cRightAlpha);
     gSPTextureRectangle(OVERLAY_DISP++, R_ITEM_BTN_X(3) << 2, R_ITEM_BTN_Y(3) << 2,
@@ -2767,6 +2854,12 @@ void Interface_DrawItemButtons(PlayState* play) {
         if ((play->pauseCtx.state != 0) || (play->pauseCtx.debugState != 0)) {
             // Start Button Texture, Color & Label
             gDPPipeSync(OVERLAY_DISP++);
+            if (GET_EVENTCHKINF(0xA1)) { // Shadow
+                    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, interfaceCtx->startAlpha/4);
+                    gSPTextureRectangle(OVERLAY_DISP++, ((startButtonLeftPos[gSaveContext.language] + 2) << 2), 68,
+                                (startButtonLeftPos[gSaveContext.language] + 30) << 2, 156, G_TX_RENDERTILE, 0, 0, 1462,
+                                1462);
+            }
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 120, 120, 120, interfaceCtx->startAlpha);
             gSPTextureRectangle(OVERLAY_DISP++, startButtonLeftPos[gSaveContext.language] << 2, 68,
                                 (startButtonLeftPos[gSaveContext.language] + 22) << 2, 156, G_TX_RENDERTILE, 0, 0, 1462,
@@ -2805,9 +2898,14 @@ void Interface_DrawItemButtons(PlayState* play) {
             } else {
                 temp = interfaceCtx->healthAlpha;
             }
-
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2), temp);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+            if (GET_EVENTCHKINF(0xA1)) { // Shadow
+                    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, temp/4);
+                    gSPTextureRectangle(OVERLAY_DISP++, ((R_C_UP_BTN_X + 2) << 2), ((R_C_UP_BTN_Y + 2) << 2), (R_C_UP_BTN_X + 18) << 2,
+                                (R_C_UP_BTN_Y + 18) << 2, G_TX_RENDERTILE, 0, 0, 2 << 10, 2 << 10);
+            }
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2), temp);
+            
             gSPTextureRectangle(OVERLAY_DISP++, R_C_UP_BTN_X << 2, R_C_UP_BTN_Y << 2, (R_C_UP_BTN_X + 16) << 2,
                                 (R_C_UP_BTN_Y + 16) << 2, G_TX_RENDERTILE, 0, 0, 2 << 10, 2 << 10);
             gDPPipeSync(OVERLAY_DISP++);
@@ -3084,6 +3182,7 @@ void Interface_Draw(PlayState* play) {
     s16 svar4;
     s16 svar5;
     s16 svar6;
+    s32 i;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 3405);
 
@@ -3100,8 +3199,13 @@ void Interface_Draw(PlayState* play) {
         Gfx_SetupDL_39Overlay(play->state.gfxCtx);
 
         // Rupee Icon
-        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 200, 255, 100, interfaceCtx->magicAlpha);
         gDPSetEnvColor(OVERLAY_DISP++, 0, 80, 0, 255);
+        if (GET_EVENTCHKINF(0xA1)) { // Shadow
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, interfaceCtx->magicAlpha/4);
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gRupeeCounterIconTex, 16, 16, 26+2, 206+2, 16+2, 16+2, 1 << 10, 1 << 10);
+        }
+
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 200, 255, 100, interfaceCtx->magicAlpha);
         OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gRupeeCounterIconTex, 16, 16, 26, 206, 16, 16, 1 << 10, 1 << 10);
 
         switch (play->sceneNum) {
@@ -3122,10 +3226,18 @@ void Interface_Draw(PlayState* play) {
                 if (gSaveContext.inventory.dungeonKeys[gSaveContext.mapIndex] >= 0) {
                     // Small Key Icon
                     gDPPipeSync(OVERLAY_DISP++);
-                    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 200, 230, 255, interfaceCtx->magicAlpha);
                     gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 20, 255);
-                    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gSmallKeyCounterIconTex, 16, 16, 26, 190, 16, 16,
+                    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 200, 230, 255, interfaceCtx->magicAlpha);
+                    if (GET_EVENTCHKINF(0xA1)) { // Shadow
+                        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gSmallKeyCounterIconTexMM, 16, 16, 26, 190 , 16, 16,
                                                   1 << 10, 1 << 10);
+                    }
+                    else {
+                        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gSmallKeyCounterIconTex, 16, 16, 26, 190, 16, 16,
+                                                  1 << 10, 1 << 10);
+                    }
+
+                    
 
                     // Small Key Counter
                     gDPPipeSync(OVERLAY_DISP++);
@@ -3287,13 +3399,55 @@ void Interface_Draw(PlayState* play) {
 
         // A Button
         Gfx_SetupDL_42Overlay(play->state.gfxCtx);
-        func_8008A8B8(play, R_A_BTN_Y, R_A_BTN_Y + 45, R_A_BTN_X, R_A_BTN_X + 45);
         gSPClearGeometryMode(OVERLAY_DISP++, G_CULL_BOTH);
         gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_A_BTN_COLOR(0), R_A_BTN_COLOR(1), R_A_BTN_COLOR(2),
+        if (GET_EVENTCHKINF(0xA1)) { // Shadow
+        gDPLoadTextureBlock(OVERLAY_DISP++, gButtonBackgroundTexMM, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0,
+                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
+                        G_TX_NOLOD);
+        } else {
+        gDPLoadTextureBlock(OVERLAY_DISP++, gButtonBackgroundTex, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0,
+                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
+                    G_TX_NOLOD);
+        }
+
+        for (i = (GET_EVENTCHKINF(0xA1)) ? 0 : 1 ; i < 2; i++) {
+            if (i != 0) {
+                func_8008A8B8(play, R_A_BTN_Y, R_A_BTN_Y + 45, R_A_BTN_X, R_A_BTN_X + 45);
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_A_BTN_COLOR(0), R_A_BTN_COLOR(1), R_A_BTN_COLOR(2),
                         interfaceCtx->aAlpha);
-        Interface_DrawActionButton(play);
-        gDPPipeSync(OVERLAY_DISP++);
+            }
+            else if (1) {
+                func_8008A8B8(play, R_A_BTN_Y + 2, R_A_BTN_Y + 45 + 2, R_A_BTN_X + 2, R_A_BTN_X + 45 + 2);
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, interfaceCtx->aAlpha/4);
+            }
+
+            Matrix_Translate(0.0f, 0.0f, XREG(18) / 10.0f, MTXMODE_NEW);
+            Matrix_Scale(1.0f, 1.0f, 1.0f, MTXMODE_APPLY);
+             Matrix_RotateX(interfaceCtx->unk_1F4 / 10000.0f, MTXMODE_APPLY);
+            
+
+            gSPMatrix(OVERLAY_DISP++, Matrix_NewMtx(play->state.gfxCtx, "../z_parameter.c", 3177),
+              G_MTX_MODELVIEW | G_MTX_LOAD);
+            gSPVertex(OVERLAY_DISP++, &interfaceCtx->actionVtx[0], 4, 0);
+        
+            /*
+            if (i == 0) {
+                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gButtonBackgroundTex, 32, 32, R_A_BTN_X, R_A_BTN_Y,
+                                R_ITEM_BTN_WIDTH(0), R_ITEM_BTN_WIDTH(0), R_ITEM_BTN_DD(0) << 1, R_ITEM_BTN_DD(0) << 1);
+            }
+            else {
+                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gButtonBackgroundTex, 32, 32, R_A_BTN_X, R_A_BTN_Y,
+                                R_ITEM_BTN_WIDTH(0), R_ITEM_BTN_WIDTH(0), R_ITEM_BTN_DD(0) << 1, R_ITEM_BTN_DD(0) << 1);
+            }*/
+            
+            gSP1Quadrangle(OVERLAY_DISP++, 0, 2, 3, 1, 0);
+            gDPPipeSync(OVERLAY_DISP++);
+
+
+        //Interface_DrawActionButton(play);
+        
+        }
         func_8008A8B8(play, R_A_ICON_Y, R_A_ICON_Y + 45, R_A_ICON_X, R_A_ICON_X + 45);
         gSPSetGeometryMode(OVERLAY_DISP++, G_CULL_BACK);
         gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0,
@@ -3314,6 +3468,9 @@ void Interface_Draw(PlayState* play) {
         }
 
         gDPPipeSync(OVERLAY_DISP++);
+
+
+
 
         func_8008A994(interfaceCtx);
 

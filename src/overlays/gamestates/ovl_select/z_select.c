@@ -31,7 +31,14 @@ void Select_LoadGame(SelectContext* this, s32 entranceIndex) {
         gSaveContext.buttonStatus[3] = gSaveContext.buttonStatus[4] = BTN_ENABLED;
     gSaveContext.unk_13E7 = gSaveContext.unk_13E8 = gSaveContext.unk_13EA = gSaveContext.unk_13EC = 0;
     Audio_QueueSeqCmd(SEQ_PLAYER_BGM_MAIN << 24 | NA_BGM_STOP);
-    gSaveContext.entranceIndex = entranceIndex;
+    
+    
+    if (this->opt == 0) {
+        gSaveContext.entranceIndex = entranceIndex;
+    }
+    else {
+        gSaveContext.entranceIndex = entranceIndex + this->opt-1;
+    }
     gSaveContext.respawnFlag = 0;
     gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = ENTR_LOAD_OPENING;
     gSaveContext.seqId = (u8)NA_BGM_DISABLED;
