@@ -146,7 +146,7 @@ def add_header(src):
     for i, line in enumerate(srcdata):
         if('#include' in line):
             break
-    srcdata = srcdata[0:i+1] + ['#include "objects/' + object + '/' + object + '.h"\n'] + srcdata[i+1:]
+    srcdata = srcdata[0:i+1] + ['#include "assets/objects/' + object + '/' + object + '.h"\n'] + srcdata[i+1:]
     with open(src,'w',encoding='utf-8', newline = '\n') as outfile:
         outfile.writelines(srcdata)
     return 1

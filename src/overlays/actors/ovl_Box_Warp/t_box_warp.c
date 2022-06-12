@@ -1,5 +1,5 @@
 #include "t_box_warp.h"
-#include "objects/object_box/object_box.h"
+#include "assets/objects/object_box/object_box.h"
 
 #define FLAGS 0
 
