@@ -144,7 +144,7 @@ typedef enum {
 } ActionButtonIndex;
 
 typedef enum {
-    /* 0 */ FS_SETTING_AUDIO,
+    /* 0 */ FS_SETTING_LANG,
     /* 1 */ FS_SETTING_TARGET
 } SettingIndex;
 

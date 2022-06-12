@@ -3371,6 +3371,12 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Box_Warp"
+    include "build/src/overlays/actors/ovl_Box_Warp/t_box_warp.o"
+    include "build/src/overlays/actors/ovl_Box_Warp/ovl_Box_Warp_reloc.o"
+endseg
+
+beginseg
     name "gameplay_keep"
     romalign 0x1000
     include "build/assets/objects/gameplay_keep/gameplay_keep.o"
@@ -8464,20 +8470,6 @@ beginseg
 endseg
 
 beginseg
-    name "depth_test_scene"
-    romalign 0x1000
-    include "build/assets/scenes/test_levels/depth_test/depth_test_scene.o"
-    number 2
-endseg
-
-beginseg
-    name "depth_test_room_0"
-    romalign 0x1000
-    include "build/assets/scenes/test_levels/depth_test/depth_test_room_0.o"
-    number 3
-endseg
-
-beginseg
     name "spot00_scene"
     romalign 0x1000
     include "build/assets/scenes/overworld/spot00/spot00_scene.o"
@@ -8900,42 +8892,17 @@ endseg
 beginseg
     name "testroom_scene"
     romalign 0x1000
-    include "build/assets/scenes/test_levels/testroom/testroom_scene.o"
+    include "build/assets/scenes/test_levels/testroom/testroom_scene_main.o"
+    include "build/assets/scenes/test_levels/testroom/testroom_scene_col.o"
     number 2
 endseg
 
 beginseg
     name "testroom_room_0"
     romalign 0x1000
-    include "build/assets/scenes/test_levels/testroom/testroom_room_0.o"
-    number 3
-endseg
-
-beginseg
-    name "testroom_room_1"
-    romalign 0x1000
-    include "build/assets/scenes/test_levels/testroom/testroom_room_1.o"
-    number 3
-endseg
-
-beginseg
-    name "testroom_room_2"
-    romalign 0x1000
-    include "build/assets/scenes/test_levels/testroom/testroom_room_2.o"
-    number 3
-endseg
-
-beginseg
-    name "testroom_room_3"
-    romalign 0x1000
-    include "build/assets/scenes/test_levels/testroom/testroom_room_3.o"
-    number 3
-endseg
-
-beginseg
-    name "testroom_room_4"
-    romalign 0x1000
-    include "build/assets/scenes/test_levels/testroom/testroom_room_4.o"
+    include "build/assets/scenes/test_levels/testroom/testroom_room_0_main.o"
+    include "build/assets/scenes/test_levels/testroom/testroom_room_0_model_info.o"
+    include "build/assets/scenes/test_levels/testroom/testroom_room_0_model.o"
     number 3
 endseg
 
@@ -9229,14 +9196,17 @@ endseg
 beginseg
     name "sasatest_scene"
     romalign 0x1000
-    include "build/assets/scenes/test_levels/sasatest/sasatest_scene.o"
+    include "build/assets/scenes/test_levels/sasatest/sasatest_scene_main.o"
+    include "build/assets/scenes/test_levels/sasatest/sasatest_scene_col.o"
     number 2
 endseg
 
 beginseg
     name "sasatest_room_0"
     romalign 0x1000
-    include "build/assets/scenes/test_levels/sasatest/sasatest_room_0.o"
+    include "build/assets/scenes/test_levels/sasatest/sasatest_room_0_main.o"
+    include "build/assets/scenes/test_levels/sasatest/sasatest_room_0_model_info.o"
+    include "build/assets/scenes/test_levels/sasatest/sasatest_room_0_model.o"
     number 3
 endseg
 
@@ -10470,4 +10440,21 @@ beginseg
     name "softsprite_matrix_static"
     romalign 0x1000
     include "build/baserom/softsprite_matrix_static.o"
+endseg
+
+beginseg
+    name "depth_test_scene"
+    romalign 0x1000
+    include "build/assets/scenes/test_levels/depth_test/depth_test_scene_main.o"
+    include "build/assets/scenes/test_levels/depth_test/depth_test_scene_col.o"
+    number 2
+endseg
+
+beginseg
+    name "depth_test_room_0"
+    romalign 0x1000
+    include "build/assets/scenes/test_levels/depth_test/depth_test_room_0_main.o"
+    include "build/assets/scenes/test_levels/depth_test/depth_test_room_0_model_info.o"
+    include "build/assets/scenes/test_levels/depth_test/depth_test_room_0_model.o"
+    number 3
 endseg

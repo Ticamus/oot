@@ -12,6 +12,7 @@
 #include "overlays/actors/ovl_En_Boom/z_en_boom.h"
 #include "overlays/actors/ovl_En_Arrow/z_en_arrow.h"
 #include "overlays/actors/ovl_En_Box/z_en_box.h"
+#include "overlays/actors/ovl_Box_Warp/t_box_warp.h"
 #include "overlays/actors/ovl_En_Door/z_en_door.h"
 #include "overlays/actors/ovl_En_Elf/z_en_elf.h"
 #include "overlays/actors/ovl_En_Fish/z_en_fish.h"
@@ -609,7 +610,7 @@ static GetItemEntry sGetItemTable[] = {
     GET_ITEM(ITEM_POE, OBJECT_GI_GHOST, GID_POE, 0x97, 0x80, CHEST_ANIM_LONG),
     GET_ITEM(ITEM_BIG_POE, OBJECT_GI_GHOST, GID_BIG_POE, 0xF9, 0x80, CHEST_ANIM_LONG),
     GET_ITEM(ITEM_KEY_SMALL, OBJECT_GI_KEY, GID_KEY_SMALL, 0xF3, 0x80, CHEST_ANIM_SHORT),
-    GET_ITEM(ITEM_RUPEE_GREEN, OBJECT_GI_RUPY, GID_RUPEE_GREEN, 0xF4, 0x00, CHEST_ANIM_SHORT),
+    GET_ITEM(ITEM_RUPEE_GREEN, OBJECT_GI_RUPY, GID_RUPEE_GREEN, 0xF4, 0x00, CHEST_ANIM_LONG),
     GET_ITEM(ITEM_RUPEE_BLUE, OBJECT_GI_RUPY, GID_RUPEE_BLUE, 0xF5, 0x01, CHEST_ANIM_SHORT),
     GET_ITEM(ITEM_RUPEE_RED, OBJECT_GI_RUPY, GID_RUPEE_RED, 0xF6, 0x02, CHEST_ANIM_SHORT),
     GET_ITEM(ITEM_RUPEE_PURPLE, OBJECT_GI_RUPY, GID_RUPEE_PURPLE, 0xF7, 0x14, CHEST_ANIM_SHORT),
@@ -6104,7 +6105,7 @@ s32 func_8083E5A8(Player* this, PlayState* play) {
 
     if (iREG(67) ||
         (((interactedActor = this->interactRangeActor) != NULL) && TitleCard_Clear(play, &play->actorCtx.titleCtx))) {
-        if (iREG(67) || (this->getItemId > GI_NONE)) {
+        if ((iREG(67) || (this->getItemId > GI_NONE))) {
             if (iREG(67)) {
                 this->getItemId = iREG(68);
             }
@@ -6138,7 +6139,35 @@ s32 func_8083E5A8(Player* this, PlayState* play) {
             }
         } else if (CHECK_BTN_ALL(sControlInput->press.button, BTN_A) && !(this->stateFlags1 & PLAYER_STATE1_11) &&
                    !(this->stateFlags2 & PLAYER_STATE2_10)) {
-            if (this->getItemId != GI_NONE) {
+                    
+                    osSyncPrintf("chest->type=%d\n", interactedActor->id);
+                
+                if (interactedActor->id == ACTOR_BOX_WARP) {
+                    GetItemEntry* giEntry = &sGetItemTable[-this->getItemId - 1];
+                    BoxWarp* BWarp = (BoxWarp*)interactedActor;
+
+                    osSyncPrintf("1 - BWarp->unk_1F4=%d\n", BWarp->unk_1F4);
+                    //BWarp->unk_1F4 = 1;
+                    osSyncPrintf("2 - BWarp->unk_1F4=%d\n", BWarp->unk_1F4);
+
+                    func_80836898(play, this, func_8083A434);
+                    this->stateFlags1 |= PLAYER_STATE1_10 | PLAYER_STATE1_11 | PLAYER_STATE1_29;
+                    func_8083AE40(this, giEntry->objectId);
+                    this->actor.world.pos.x =
+                        BWarp->dyna.actor.world.pos.x - (Math_SinS(BWarp->dyna.actor.shape.rot.y) * 29.4343f);
+                    this->actor.world.pos.z =
+                        BWarp->dyna.actor.world.pos.z - (Math_CosS(BWarp->dyna.actor.shape.rot.y) * 29.4343f);
+                    this->currentYaw = this->actor.shape.rot.y = BWarp->dyna.actor.shape.rot.y;
+                    func_80832224(this);
+
+                    func_808322D0(play, this, this->ageProperties->unk_98);
+                    func_80832F54(play, this, 0x28F);
+                    BWarp->unk_1F4 = 1;
+                    Camera_ChangeSetting(Play_GetCamera(play, CAM_ID_MAIN), CAM_SET_SLOW_CHEST_CS);
+                    return 1;
+                }
+
+            if (this->getItemId != GI_NONE)  {
                 GetItemEntry* giEntry = &sGetItemTable[-this->getItemId - 1];
                 EnBox* chest = (EnBox*)interactedActor;
 

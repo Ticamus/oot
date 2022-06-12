@@ -299,10 +299,6 @@ static InitChainEntry sInitChain[] = {
 void BgSpot08Iceblock_Init(Actor* thisx, PlayState* play) {
     BgSpot08Iceblock* this = (BgSpot08Iceblock*)thisx;
     CollisionHeader* colHeader;
-    Vec3f pos;
-    Vec3f vel = { 0.0f, 1.0f, 0.0f };
-    Vec3f accel = { 0.0f, 0.0f, 0.0f };
-    f32 f0;
 
     // "spot08 ice floe"
     osSyncPrintf("(spot08 流氷)(arg_data 0x%04x)\n", this->dyna.actor.params);
@@ -344,12 +340,6 @@ void BgSpot08Iceblock_Init(Actor* thisx, PlayState* play) {
             Actor_SetScale(&this->dyna.actor, 0.1f);
             break;
         case 0x20:
-            f0 = 2.0f * Rand_ZeroOne() - 1.0f;
-            vel.x = f0 * 1.6f * Math_SinS(this->dyna.actor.world.rot.y);
-            vel.y = 1.8f;
-            vel.z = f0 * 1.6f * Math_CosS(this->dyna.actor.world.rot.y);
-            pos = this->dyna.actor.world.pos;
-            EffectSsIceSmoke_Spawn(play, &this->dyna.actor.world.pos, &vel, &accel, 1500);
             Audio_PlayActorSound2(&this->dyna.actor, NA_SE_PL_FREEZE_S);
             this->timer = 300; // = 300 = 15 secondes
             //Actor_SetScale(&this->dyna.actor, 0.05f);

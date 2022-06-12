@@ -195,7 +195,7 @@ static SavePlayerData sDebugSavePlayerData = {
     0,                                                  // naviTimer
     true,                                               // isMagicAcquired
     0,                                                  // unk_1F
-    false,                                              // isDoubleMagicAcquired
+    true,                                              // isDoubleMagicAcquired
     0,                                                  // doubleDefense
     0,                                                  // bgsFlag
     0,                                                  // ocarinaGameRoundNum
@@ -279,6 +279,7 @@ void Sram_InitDebugSave(void) {
     gSaveContext.horseData.pos.y = 72;
     gSaveContext.horseData.pos.z = 5497;
     gSaveContext.horseData.angle = -0x6AD9;
+    gSaveContext.zTargetSetting = 1;
     //gSaveContext.infTable[0] |= 0x5009;
     gSaveContext.eventChkInf[0] |= 0x123F;
     SET_EVENTCHKINF(EVENTCHKINF_80);
@@ -295,7 +296,7 @@ void Sram_InitDebugSave(void) {
     }
 
     gSaveContext.entranceIndex = ENTR_SPOT00_0;
-    gSaveContext.magicLevel = 0;
+    //gSaveContext.magicLevel = 0;
     gSaveContext.sceneFlags[5].swch = 0x40000000;
 }
 
