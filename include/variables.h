@@ -166,6 +166,18 @@ extern u8 gSequenceFontTable[];
 extern u8 gSequenceTable[];
 extern u8 gSampleBankTable[];
 
+extern TriNorm D_801EF590;
+extern TriNorm D_801EF5C8;
+extern TriNorm D_801EF600;
+extern TriNorm D_801EF638;
+extern TriNorm D_801EE150;
+extern TriNorm D_801EE188;
+extern TriNorm D_801EE6C8;
+extern TriNorm D_801EE700;
+
+extern Vec3f D_801EDE00;
+extern Linef D_801EDFC8;
+
 extern SaveContext gSaveContext;
 extern GameInfo* gGameInfo;
 extern u16 D_8015FCC0;

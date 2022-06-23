@@ -241,6 +241,17 @@ void Math_Vec3s_ToVec3f(Vec3f* dest, Vec3s* src) {
     dest->z = src->z;
 }
 
+void Math_Vec3f_ToVec3s(Vec3s* dest, Vec3f* src) {
+    f32 x = src->x;
+    f32 y = src->y;
+    f32 z = src->z;
+
+    dest->x = x;
+    dest->y = y;
+    dest->z = z;
+}
+
+
 void Math_Vec3f_Sum(Vec3f* a, Vec3f* b, Vec3f* dest) {
     dest->x = a->x + b->x;
     dest->y = a->y + b->y;

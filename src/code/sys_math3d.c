@@ -1974,11 +1974,12 @@ s32 Math3D_SphVsCylOverlapCenterDist(Sphere16* sph, Cylinder16* cyl, f32* overla
     f32 cylTop;
     f32 sphBottom;
     f32 sphTop;
-
+    //osSyncPrintf("In the function\n");
     if (sph->radius <= 0 || cyl->radius <= 0) {
         // either radius is 0
         return false;
     }
+    //osSyncPrintf("1st if done\n");
     sphf.center.y = sph->center.y;
     sphf.radius = sph->radius;
     cylf.pos.y = cyl->pos.y;
@@ -1988,16 +1989,18 @@ s32 Math3D_SphVsCylOverlapCenterDist(Sphere16* sph, Cylinder16* cyl, f32* overla
     z = (f32)sph->center.z - cyl->pos.z;
     combinedRadius = (f32)sph->radius + cyl->radius;
     *centerDist = sqrtf(SQ(x) + SQ(z));
+    //osSyncPrintf("centerDist done\n");
     if (combinedRadius < *centerDist) {
         // if the combined radii is less than the distance to the centers, they cannot be touching.
+         //osSyncPrintf("centerDist check false\n");
         return false;
     }
-
+    //osSyncPrintf("centerDist check done\n");
     cylBottom = (cylf.pos.y + cylf.yShift);
     cylTop = cylBottom + cylf.height;
     sphBottom = sphf.center.y - sphf.radius;
     sphTop = sphf.center.y + sphf.radius;
-
+    //osSyncPrintf("before last if\n");
     if ((sphTop >= cylBottom) && (sphBottom <= cylTop)) {
         // if the cylinder and sphere are intersecting on the xz plane, check if they're intersecting on
         // the y axis.

@@ -14,7 +14,7 @@ void TitleSetup_InitImpl(GameState* gameState) {
     Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_DEKU);
     SET_EVENTCHKINF(0xA1);
     gSaveContext.dayTime = CLOCK_TIME(6, 0);
-    gSaveContext.entranceIndex = ENTR_TEST01_0;
+    gSaveContext.entranceIndex = 0;
     gSaveContext.respawnFlag = 0;
     gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = ENTR_LOAD_OPENING;
     SET_NEXT_GAMESTATE(gameState, Play_Init, PlayState);

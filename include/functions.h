@@ -753,6 +753,13 @@ s32 Collider_SetQuad(PlayState* play, ColliderQuad* collider, Actor* actor, Coll
 s32 Collider_ResetQuadAT(PlayState* play, Collider* collider);
 s32 Collider_ResetQuadAC(PlayState* play, Collider* collider);
 s32 Collider_ResetQuadOC(PlayState* play, Collider* collider);
+s32 Collider_InitSphere(PlayState* play, ColliderSphere* collider);
+s32 Collider_DestroySphere(PlayState* play, ColliderSphere* collider);
+s32 Collider_SetSphere(PlayState* play, ColliderSphere* collider, Actor* actor, ColliderSphereInit* src);
+s32 Collider_InitAndSetSphere(PlayState* play, ColliderSphere* collider, Actor* actor, ColliderSphereInit* src);
+s32 Collider_ResetSphereAT(PlayState* play, Collider* collider);
+s32 Collider_ResetSphereAC(PlayState* play, Collider* collider);
+s32 Collider_ResetSphereOC(PlayState* play, Collider* collider);
 s32 Collider_InitLine(PlayState* play, OcLine* line);
 s32 Collider_DestroyLine(PlayState* play, OcLine* line);
 s32 Collider_SetLinePoints(PlayState* play, OcLine* ocLine, Vec3f* a, Vec3f* b);
@@ -782,6 +789,7 @@ void CollisionCheck_SetInfo(CollisionCheckInfo* info, DamageTable* damageTable, 
 void CollisionCheck_SetInfo2(CollisionCheckInfo* info, DamageTable* damageTable, CollisionCheckInfoInit2* init);
 void CollisionCheck_SetInfoGetDamageTable(CollisionCheckInfo* info, s32 index, CollisionCheckInfoInit2* init);
 void CollisionCheck_Damage(PlayState* play, CollisionCheckContext* colChkCtx);
+s32 CollisionCheck_LineOC_Sphere(PlayState* play, CollisionCheckContext* colChkCtx, Collider* collider, Vec3f* a, Vec3f* b);
 s32 CollisionCheck_LineOCCheckAll(PlayState* play, CollisionCheckContext* colChkCtx, Vec3f* a, Vec3f* b);
 s32 CollisionCheck_LineOCCheck(PlayState* play, CollisionCheckContext* colChkCtx, Vec3f* a, Vec3f* b,
                                Actor** exclusions, s32 numExclusions);
@@ -907,6 +915,7 @@ void func_80077D10(f32* arg0, s16* arg1, Input* input);
 s16 Rand_S16Offset(s16 base, s16 range);
 void Math_Vec3f_Copy(Vec3f* dest, Vec3f* src);
 void Math_Vec3s_ToVec3f(Vec3f* dest, Vec3s* src);
+void Math_Vec3f_ToVec3s(Vec3s* dest, Vec3f* src);
 void Math_Vec3f_Sum(Vec3f* a, Vec3f* b, Vec3f* dest);
 void Math_Vec3f_Diff(Vec3f* a, Vec3f* b, Vec3f* dest);
 void Math_Vec3s_DiffToVec3f(Vec3f* dest, Vec3s* a, Vec3s* b);

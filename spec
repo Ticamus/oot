@@ -3390,6 +3390,12 @@ beginseg
     include "build/src/overlays/actors/ovl_Obj_Shutter/z_obj_shutter.o"
     include "build/src/overlays/actors/ovl_Obj_Shutter/ovl_Obj_Shutter_reloc.o"
 endseg
+
+beginseg
+    name "ovl_Obj_Bell"
+    include "build/src/overlays/actors/ovl_Obj_Bell/z_obj_bell.o"
+    include "build/src/overlays/actors/ovl_Obj_Bell/ovl_Obj_Bell_reloc.o"
+endseg
 //
 
 beginseg
@@ -6080,6 +6086,12 @@ beginseg
     include "build/assets/objects/object_f53_obj/object_f53_obj.o"
 endseg
 
+beginseg
+    name "object_f52_obj"
+    romalign 0x1000
+    number 6
+    include "build/assets/objects/object_f52_obj/object_f52_obj.o"
+endseg
 
 //
 
