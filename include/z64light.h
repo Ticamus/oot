@@ -28,12 +28,14 @@ typedef union {
 } LightParams; // size = 0xC
 
 typedef struct {
+    
     /* 0x0 */ u8 type;
     /* 0x2 */ LightParams params;
 } LightInfo; // size = 0xE
 
 typedef struct Lights {
-    /* 0x00 */ u8 numLights;
+    /* 0x00 */ u8 enablePosLights;
+    /* 0x01 */ u8 numLights;
     /* 0x08 */ Lightsn l;
 } Lights; // size = 0x80
 
@@ -57,6 +59,9 @@ typedef enum {
     /* 0x02 */ LIGHT_POINT_GLOW
 } LightType;
 
+struct PlayState;
+
 typedef void (*LightsBindFunc)(Lights* lights, LightParams* params, Vec3f* vec);
+typedef void (*LightsPosBindFunc)(Lights* lights, LightParams* params, struct PlayState* play);
 
 #endif

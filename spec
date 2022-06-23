@@ -3370,11 +3370,27 @@ beginseg
     include "build/src/overlays/actors/ovl_Shot_Sun/ovl_Shot_Sun_reloc.o"
 endseg
 
+//CUSTOM
+
 beginseg
     name "ovl_Box_Warp"
     include "build/src/overlays/actors/ovl_Box_Warp/t_box_warp.o"
     include "build/src/overlays/actors/ovl_Box_Warp/ovl_Box_Warp_reloc.o"
 endseg
+
+
+beginseg
+    name "ovl_Bg_Market_Step"
+    include "build/src/overlays/actors/ovl_Bg_Market_Step/z_bg_market_step.o"
+    include "build/src/overlays/actors/ovl_Bg_Market_Step/ovl_Bg_Market_Step_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Shutter"
+    include "build/src/overlays/actors/ovl_Obj_Shutter/z_obj_shutter.o"
+    include "build/src/overlays/actors/ovl_Obj_Shutter/ovl_Obj_Shutter_reloc.o"
+endseg
+//
 
 beginseg
     name "gameplay_keep"
@@ -6048,6 +6064,25 @@ beginseg
     include "build/assets/objects/object_zl4/object_zl4.o"
     number 6
 endseg
+
+// CUSTOM
+beginseg
+    name "object_market_obj"
+    romalign 0x1000
+    number 6
+    include "build/assets/objects/object_market_obj/object_market_obj.o"
+endseg
+
+beginseg
+    name "object_f53_obj"
+    romalign 0x1000
+    number 6
+    include "build/assets/objects/object_f53_obj/object_f53_obj.o"
+endseg
+
+
+//
+
 
 beginseg
     name "g_pn_01"

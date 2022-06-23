@@ -1229,7 +1229,7 @@ void Play_Draw(PlayState* this) {
 
                 if ((HREG(80) != 10) || (HREG(90) & 8)) {
                     sp228 = LightContext_NewLights(&this->lightCtx, gfxCtx);
-                    Lights_BindAll(sp228, this->lightCtx.listHead, NULL);
+                    Lights_BindAll(sp228, this->lightCtx.listHead, NULL, this);
                     Lights_Draw(sp228, gfxCtx);
                 }
 

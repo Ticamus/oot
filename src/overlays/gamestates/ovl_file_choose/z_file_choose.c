@@ -168,10 +168,68 @@ void FileChoose_FinishFadeIn(GameState* thisx) {
  * Update function for `CM_MAIN_MENU`
  */
 void FileChoose_UpdateMainMenu(GameState* thisx) {
+     GfxPrint printer;
+    Gfx* gfx;
     static u8 emptyName[] = { 0x3E, 0x3E, 0x3E, 0x3E, 0x3E, 0x3E, 0x3E, 0x3E };
     FileChooseContext* this = (FileChooseContext*)thisx;
     SramContext* sramCtx = &this->sramCtx;
     Input* input = &this->state.input[0];
+
+     
+   
+    
+    
+    OPEN_DISPS(this->state.gfxCtx, __FILE__, __LINE__);
+
+    gfx = POLY_OPA_DISP + 1;
+    gSPDisplayList(OVERLAY_DISP++, gfx);
+
+    GfxPrint_Init(&printer);
+    GfxPrint_Open(&printer, gfx);
+
+    GfxPrint_SetColor(&printer, 255, 0, 255, 255);
+    GfxPrint_SetPos(&printer, 5 , 10);
+    GfxPrint_Printf(&printer,"gSaveContext.skyboxTime = %04x", gSaveContext.skyboxTime);
+    
+    
+
+    gfx = GfxPrint_Close(&printer);
+    GfxPrint_Destroy(&printer);
+
+    gSPEndDisplayList(gfx++);
+    gSPBranchList(POLY_OPA_DISP, gfx);
+    POLY_OPA_DISP = gfx;
+
+    CLOSE_DISPS(this->state.gfxCtx, __FILE__, __LINE__);
+
+
+    switch (this->buttonIndex) {
+        case FS_BTN_MAIN_FILE_1:
+        if (gSaveContext.skyboxTime != 0) { // 4000
+            if ((gSaveContext.skyboxTime > 0x4000) && (gSaveContext.skyboxTime < 0xC000)) {
+                gSaveContext.skyboxTime -= 0x200;
+            }
+            else {
+                gSaveContext.skyboxTime += 0x200;
+            }
+            
+        }
+            break;
+        case FS_BTN_MAIN_FILE_2:
+            if (gSaveContext.skyboxTime != 0xC000) {
+            gSaveContext.skyboxTime += (gSaveContext.skyboxTime > 0xC000) ? -0x200 : 0x200;
+        }
+            break;
+        case FS_BTN_MAIN_FILE_3:
+            if (gSaveContext.skyboxTime != 0x8000) {
+            gSaveContext.skyboxTime += (gSaveContext.skyboxTime > 0x8000) ? -0x200 : 0x200;
+        }
+            break;
+        case FS_BTN_MAIN_OPTIONS:
+            if (gSaveContext.skyboxTime != 0x4000) {
+            gSaveContext.skyboxTime += (gSaveContext.skyboxTime > 0x4000) ? -0x200 : 0x200;
+        }
+    }
 
     if (CHECK_BTN_ALL(input->press.button, BTN_START) || CHECK_BTN_ALL(input->press.button, BTN_A)) {
         if (this->buttonIndex <= FS_BTN_MAIN_FILE_3) {
@@ -1601,7 +1659,6 @@ void FileChoose_Main(GameState* thisx) {
     OPEN_DISPS(this->state.gfxCtx, "../z_file_choose.c", 2898);
 
     this->n64ddFlag = 0;
-    gSaveContext.skyboxTime += 0x40;
 
     gSPSegment(POLY_OPA_DISP++, 0x00, NULL);
     gSPSegment(POLY_OPA_DISP++, 0x01, this->staticSegment);

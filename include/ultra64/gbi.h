@@ -1264,6 +1264,16 @@ typedef struct {
   char      pad3;
 } Light_t;
 
+// Added in MM
+typedef struct {
+    unsigned char col[3];
+    unsigned char unk3;
+    unsigned char colc[3];
+    unsigned char unk7;
+    short pos[3];
+    unsigned char unkE;
+} PointLight_t;
+
 typedef struct {
   unsigned char col[3];     /* ambient light value (rgba) */
   char      pad1;
@@ -1277,6 +1287,7 @@ typedef struct {
 
 typedef union {
     Light_t l;
+    PointLight_t	p;
     long long int   force_structure_alignment[2];
 } Light;
 

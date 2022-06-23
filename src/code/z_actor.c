@@ -466,10 +466,10 @@ void func_8002C7BC(TargetContext* targetCtx, Player* player, Actor* actorArg, Pl
         targetCtx->naviRefPos.y += temp3 * temp1;
         targetCtx->naviRefPos.z += temp4 * temp1;
     } else {
-        Actor_SetNaviToActor(targetCtx, unkActor, actorCategory, play);
-    }
+            Actor_SetNaviToActor(targetCtx, unkActor, actorCategory, play);
+        }
 
-    if ((actorArg != NULL) && (targetCtx->unk_4B == 0)) {
+        if ((actorArg != NULL) && (targetCtx->unk_4B == 0)) {
         Actor_ProjectPos(play, &actorArg->focus.pos, &projectedFocusPos, &cappedInvWDest);
         if (((projectedFocusPos.z <= 0.0f) || (1.0f <= fabsf(projectedFocusPos.x * cappedInvWDest))) ||
             (1.0f <= fabsf(projectedFocusPos.y * cappedInvWDest))) {
@@ -2177,8 +2177,11 @@ void Actor_Draw(PlayState* play, Actor* actor) {
     OPEN_DISPS(play->state.gfxCtx, "../z_actor.c", 6035);
 
     lights = LightContext_NewLights(&play->lightCtx, play->state.gfxCtx);
+    if ((actor->flags & ACTOR_FLAG_28) && (play->roomCtx.curRoom.enablePosLights || (MREG(93) != 0))) {
+        lights->enablePosLights = true;
+    }
 
-    Lights_BindAll(lights, play->lightCtx.listHead, (actor->flags & ACTOR_FLAG_22) ? NULL : &actor->world.pos);
+    Lights_BindAll(lights, play->lightCtx.listHead, (actor->flags & (ACTOR_FLAG_22 | ACTOR_FLAG_28)) ? NULL : &actor->world.pos, play);
     Lights_Draw(lights, play->state.gfxCtx);
 
     if (actor->flags & ACTOR_FLAG_12) {
