@@ -216,9 +216,9 @@ void func_80A359B4(Actor* thisx, PlayState* play) {
     Matrix_Translate(thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, MTXMODE_NEW);
     Matrix_Scale(thisx->scale.x, thisx->scale.y, thisx->scale.z, MTXMODE_APPLY);
     Matrix_Translate(0.0f, 2600.0f, 0.0f, MTXMODE_APPLY);
-    Matrix_RotateY(thisx->world.rot.y, MTXMODE_APPLY);
-    Matrix_RotateX(thisx->world.rot.x, MTXMODE_APPLY);
-    Matrix_RotateY(-thisx->world.rot.y, MTXMODE_APPLY);
+    Matrix_RotateYS(thisx->world.rot.y, MTXMODE_APPLY);
+    Matrix_RotateXS(thisx->world.rot.x, MTXMODE_APPLY);
+    Matrix_RotateYS(-thisx->world.rot.y, MTXMODE_APPLY);
     Matrix_Translate(0.0f, -2600.0f, 0.0f, MTXMODE_APPLY);
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
@@ -233,7 +233,7 @@ void func_80A359B4(Actor* thisx, PlayState* play) {
 void func_80A35B18(Actor* thisx, PlayState* play) {
     Matrix_Translate(thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, MTXMODE_NEW);
     Matrix_Scale(thisx->scale.x, thisx->scale.y, thisx->scale.z, MTXMODE_APPLY);
-    Matrix_RotateY(thisx->shape.rot.y, MTXMODE_APPLY);
+    Matrix_RotateYS(thisx->shape.rot.y, MTXMODE_APPLY);
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
     gSPMatrix(POLY_OPA_DISP++, Matrix_NewMtx(play->state.gfxCtx, __FILE__, __LINE__), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
@@ -294,7 +294,7 @@ void ObjBell_Draw(Actor* thisx, PlayState* play) {
     Vec3f sp30;
     Vec3f sp24;
 
-    GfxPrint printer;
+    /*GfxPrint printer;
     Gfx* gfx;
 
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
@@ -318,7 +318,7 @@ void ObjBell_Draw(Actor* thisx, PlayState* play) {
     gSPBranchList(POLY_OPA_DISP, gfx);
     POLY_OPA_DISP = gfx;
 
-    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);*/
 
     func_80A35B18(thisx, play);
     func_80A35BD4(thisx, play);

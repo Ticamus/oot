@@ -285,15 +285,15 @@ static SceneSelectEntry sScenes[] = {
     // "116: Special Room (Treasure Chest Warp)" (Ganondorf Test Room)
     { "116:" GFXP_HIRAGANA "ﾍﾞｯｼﾂ (ﾀｶﾗﾊﾞｺ" GFXP_KATAKANA "ﾜｰﾌﾟ)", Select_LoadGame, ENTR_BESITU_0 },
     // "117: Sasaki Test" (Sasa Test)
-    { "117:" GFXP_HIRAGANA "ｻｻ" GFXP_KATAKANA "ﾃｽﾄ", Select_LoadGame, ENTR_SASATEST_0 },
+    { "117:CLOCK TOWN ALLEY", Select_LoadGame, ENTR_SASATEST_0 },
     // "118: Test Map" (Jungle Gym)
-    { "118:" GFXP_KATAKANA "ﾃｽﾄﾏｯﾌﾟ", Select_LoadGame, ENTR_TEST01_0 },
+    { "118:CLOCK TOWN WEST", Select_LoadGame, ENTR_TEST01_0 },
     // "119: Test Room" (Treasure Chest Room)
     { "119:" GFXP_KATAKANA "ﾃｽﾄﾙｰﾑ", Select_LoadGame, ENTR_TESTROOM_0 },
     // "120: Stalfos Miniboss Room" (Stalfos Miniboss Room)
     { "120:" GFXP_HIRAGANA "ﾁｭｳ" GFXP_KATAKANA "ｽﾀﾛﾌｫｽ" GFXP_HIRAGANA "ﾍﾞﾔ", Select_LoadGame, ENTR_SYOTES_0 },
     // "121: Boss Stalfos Room" (Stalfos Boss Room)
-    { "121:" GFXP_KATAKANA "ﾎﾞｽｽﾀﾛﾌｫｽ" GFXP_HIRAGANA "ﾍﾞﾔ", Select_LoadGame, ENTR_SYOTES2_0 },
+    { "121:CLOCK TOWN EAST", Select_LoadGame, ENTR_SYOTES2_0 },
     // "122: Stal" (Sutaru)
     { "122:Sutaru", Select_LoadGame, ENTR_SUTARU_0 },
     // "123: Test Area" (Shooting Gallery)
