@@ -129,7 +129,7 @@ void EnBomChu_CrossProduct(Vec3f* a, Vec3f* b, Vec3f* dest) {
     dest->z = (a->x * b->y) - (a->y * b->x);
 }
 
-void EnBomChu_UpdateFloorPoly(EnBomChu* this, CollisionPoly* floorPoly, PlayState* play) {
+s32 EnBomChu_UpdateFloorPoly(EnBomChu* this, CollisionPoly* floorPoly, PlayState* play) {
     Vec3f normal;
     Vec3f vec;
     f32 angle;
@@ -139,10 +139,14 @@ void EnBomChu_UpdateFloorPoly(EnBomChu* this, CollisionPoly* floorPoly, PlayStat
 
     this->actor.floorPoly = floorPoly;
 
-    normal.x = COLPOLY_GET_NORMAL(floorPoly->normal.x);
-    normal.y = COLPOLY_GET_NORMAL(floorPoly->normal.y);
-    normal.z = COLPOLY_GET_NORMAL(floorPoly->normal.z);
-
+    if (floorPoly != NULL) {
+        normal.x = COLPOLY_GET_NORMAL(floorPoly->normal.x);
+        normal.y = COLPOLY_GET_NORMAL(floorPoly->normal.y);
+        normal.z = COLPOLY_GET_NORMAL(floorPoly->normal.z);
+    } else {
+        EnBomChu_Explode(this, play);
+        return false;
+    }
     normDotUp = DOTXYZ(normal, this->axisUp);
 
     if (!(fabsf(normDotUp) >= 1.0f)) {
@@ -231,7 +235,7 @@ void EnBomChu_WaitForRelease(EnBomChu* this, PlayState* play) {
         this->axisLeft.z = Math_CosS(this->actor.shape.rot.y + 0x4000);
 
         this->actor.speedXZ = 8.0f;
-        //! @bug there is no NULL check on the floor poly.  If the player is out of bounds the floor poly will be NULL
+        //! @corrected there is no NULL check on the floor poly.  If the player is out of bounds the floor poly will be NULL
         //! and will cause a crash inside this function.
         EnBomChu_UpdateFloorPoly(this, this->actor.floorPoly, play);
         this->actor.flags |= ACTOR_FLAG_0; // make chu targetable
@@ -246,11 +250,14 @@ void EnBomChu_Move(EnBomChu* this, PlayState* play) {
     s32 bgIdSide;
     s32 bgIdUpDown;
     s32 i;
+    s32 isFloorPolyValid;
     f32 lineLength;
     Vec3f posA;
     Vec3f posB;
     Vec3f posSide;
     Vec3f posUpDown;
+
+    isFloorPolyValid = false;
 
     this->actor.speedXZ = 8.0f;
     lineLength = this->actor.speedXZ * 2.0f;
@@ -286,13 +293,13 @@ void EnBomChu_Move(EnBomChu* this, PlayState* play) {
                                     &bgIdSide) &&
             !(func_80041DB8(&play->colCtx, polySide, bgIdSide) & 0x30) &&
             !SurfaceType_IsIgnoredByProjectiles(&play->colCtx, polySide, bgIdSide)) {
-            EnBomChu_UpdateFloorPoly(this, polySide, play);
+            isFloorPolyValid = EnBomChu_UpdateFloorPoly(this, polySide, play);
             this->actor.world.pos = posSide;
             this->actor.floorBgId = bgIdSide;
             this->actor.speedXZ = 0.0f;
         } else {
             if (this->actor.floorPoly != polyUpDown) {
-                EnBomChu_UpdateFloorPoly(this, polyUpDown, play);
+                isFloorPolyValid = EnBomChu_UpdateFloorPoly(this, polyUpDown, play);
             }
 
             this->actor.world.pos = posUpDown;
@@ -325,7 +332,7 @@ void EnBomChu_Move(EnBomChu* this, PlayState* play) {
                                         &bgIdSide) &&
                 !(func_80041DB8(&play->colCtx, polySide, bgIdSide) & 0x30) &&
                 !SurfaceType_IsIgnoredByProjectiles(&play->colCtx, polySide, bgIdSide)) {
-                EnBomChu_UpdateFloorPoly(this, polySide, play);
+                isFloorPolyValid = EnBomChu_UpdateFloorPoly(this, polySide, play);
                 this->actor.world.pos = posSide;
                 this->actor.floorBgId = bgIdSide;
                 break;

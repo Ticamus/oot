@@ -20,8 +20,8 @@ const ActorInit Bg_Pushbox_InitVars = {
     ACTOR_BG_PUSHBOX,
     ACTORCAT_BG,
     FLAGS,
-    //! @bug fixing this actor would involve using OBJECT_PU_BOX
-    OBJECT_GAMEPLAY_DANGEON_KEEP,
+    //! @corrected fixing this actor would involve using OBJECT_PU_BOX
+    OBJECT_PU_BOX,
     sizeof(BgPushbox),
     (ActorFunc)BgPushbox_Init,
     (ActorFunc)BgPushbox_Destroy,

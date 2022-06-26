@@ -1439,8 +1439,8 @@ s32 CollisionCheck_SetOC_SAC(PlayState* play, CollisionCheckContext* colChkCtx, 
             osSyncPrintf("CollisionCheck_setOC_SAC():全データ数より大きいところに登録しようとしている。\n");
             return -1;
         }
-        //! @bug Should be colOC
-        colChkCtx->colAT[index] = collider;
+        //! @corrected Should be colOC
+        colChkCtx->colOC[index] = collider;
     } else {
         if (!(colChkCtx->colOCCount < COLLISION_CHECK_OC_MAX)) {
             // "Index exceeded and cannot add more"

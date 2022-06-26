@@ -1377,8 +1377,8 @@ void Environment_DrawSunAndMoon(PlayState* play) {
         Math_SmoothStepToF(&play->envCtx.sunPos.y,
                            (Math_CosS(((void)0, gSaveContext.dayTime) - CLOCK_TIME(12, 0)) * 120.0f) * 25.0f, 1.0f,
                            0.8f, 0.8f);
-        //! @bug This should be z.
-        Math_SmoothStepToF(&play->envCtx.sunPos.y,
+        //! @corrected This should be z.
+        Math_SmoothStepToF(&play->envCtx.sunPos.z,
                            (Math_CosS(((void)0, gSaveContext.dayTime) - CLOCK_TIME(12, 0)) * 20.0f) * 25.0f, 1.0f, 0.8f,
                            0.8f);
     } else {

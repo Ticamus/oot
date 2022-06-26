@@ -56,7 +56,7 @@ const ActorInit Door_Shutter_InitVars = {
     (ActorFunc)DoorShutter_Init,
     (ActorFunc)DoorShutter_Destroy,
     (ActorFunc)DoorShutter_Update,
-    (ActorFunc)DoorShutter_Draw,
+    (ActorFunc)NULL,
 };
 
 typedef struct {
@@ -287,6 +287,7 @@ void DoorShutter_Destroy(Actor* thisx, PlayState* play) {
 void DoorShutter_SetupType(DoorShutter* this, PlayState* play) {
     if (Object_IsLoaded(&play->objectCtx, this->requiredObjBankIndex)) {
         this->dyna.actor.objBankIndex = this->requiredObjBankIndex;
+        this->dyna.actor.draw = DoorShutter_Draw;
         if (this->doorType == SHUTTER_PG_BARS || this->doorType == SHUTTER_GOHMA_BLOCK) {
             // Init dynapoly for shutters of the type that uses it
             CollisionHeader* colHeader = NULL;
@@ -691,7 +692,7 @@ s32 func_80997A34(DoorShutter* this, PlayState* play) {
 void DoorShutter_Draw(Actor* thisx, PlayState* play) {
     DoorShutter* this = (DoorShutter*)thisx;
 
-    //! @bug This actor is not fully initialized until the required object dependency is loaded.
+    //! @corrected This actor is not fully initialized until the required object dependency is loaded.
     //! In most cases, the check for objBankIndex to equal requiredObjBankIndex prevents the actor
     //! from drawing until initialization is complete. However if the required object is the same as the
     //! object dependency listed in init vars (gameplay_keep in this case), the check will pass even though

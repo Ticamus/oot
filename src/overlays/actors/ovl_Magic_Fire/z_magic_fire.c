@@ -121,7 +121,6 @@ void MagicFire_Update(Actor* thisx, PlayState* play) {
     Player* player = GET_PLAYER(play);
     s32 pad;
 
-    if (1) {}
     this->actor.world.pos = player->actor.world.pos;
 
     // See `ACTOROVL_ALLOC_ABSOLUTE`

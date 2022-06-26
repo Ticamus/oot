@@ -727,8 +727,8 @@ s32 Math3D_LineVsCube(Vec3f* min, Vec3f* max, Vec3f* a, Vec3f* b) {
     triVtx1.y = min->y;
     triVtx1.z = max->z;
     triVtx2.x = max->x;
-    //! @bug trVtx1.y should be triVtx2.y, prevents a tri on the cube from being checked.
-    triVtx1.y = min->y;
+    //! @corrected trVtx1.y should be triVtx2.y, prevents a tri on the cube from being checked.
+    triVtx2.y = min->y;
     triVtx2.z = max->z;
     if (Math3D_TriLineIntersect(&triVtx0, &triVtx1, &triVtx2, 0.0f, 0.0f, 1.0f, -max->z, a, b, &intersectPoint, 0)) {
         return true;

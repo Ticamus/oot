@@ -189,8 +189,8 @@ static SavePlayerData sDebugSavePlayerData = {
     0xE0,                                               // healthCapacity
     0xE0,                                               // health
     0,                                                  // magicLevel
-    MAGIC_NORMAL_METER,                                 // magic
-    150,                                                // rupees
+    MAGIC_DOUBLE_METER,                                 // magic
+    169,                                                // rupees
     8,                                                  // swordHealth
     0,                                                  // naviTimer
     true,                                               // isMagicAcquired

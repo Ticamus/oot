@@ -148,15 +148,14 @@ s32 DemoTreLgt_OverrideLimbDraw(PlayState* play, SkelCurve* skelCurve, s32 limbI
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_demo_tre_lgt.c", 448);
 
-    //! @bug missing return
+    //! @corrected missing return
     //! If the returned value (i.e. the contents of v0) ends up being false (0), the limb won't draw. Therefore what
     //! matters is what was last written to v0 before the end of the function.
     //! - In debug versions, the last instruction that does this is in `Graph_CloseDisps`.
     //! - In retail versions, `gDPSetPrimColor` writes to it last.
     //! In both cases, that instruction sets v0 to a non-NULL pointer, which is "true", so the limb happens to be drawn.
-#ifdef AVOID_UB
     return true;
-#endif
+
 }
 
 void DemoTreLgt_Draw(Actor* thisx, PlayState* play) {

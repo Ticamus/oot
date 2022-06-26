@@ -299,7 +299,7 @@ static SceneSelectEntry sScenes[] = {
     // "123: Test Area" (Shooting Gallery)
     { "123:jikkenjyou", MapSelect_LoadGame, ENTR_TEST_SYATEKIJYOU_0 },
     // "124: Depth Test" (Depth Test)
-    { "124:depth" GFXP_KATAKANA "ﾃｽﾄ", MapSelect_LoadGame, ENTR_DEPTH_TEST_0 },
+    { "124:CLOCK TOWN SOUTH", MapSelect_LoadGame, ENTR_DEPTH_TEST_0 },
     // "125: Hyrule Garden Game 2" (Early Hyrule Garden Game)
     { "125:" GFXP_KATAKANA "ﾊｲﾗﾙ" GFXP_HIRAGANA "ﾆﾜ" GFXP_KATAKANA "ｹﾞｰﾑ2", MapSelect_LoadGame, ENTR_HAIRAL_NIWA2_0 },
     // "title" (Title Screen)
