@@ -167,8 +167,8 @@ void FileSelect_FinishFadeIn(GameState* thisx) {
  * Lastly, set any warning labels if appropriate.
  * Update function for `CM_MAIN_MENU`
  */
-void FileChoose_UpdateMainMenu(GameState* thisx) {
-     GfxPrint printer;
+void FileSelect_UpdateMainMenu(GameState* thisx) {
+    GfxPrint printer;
     Gfx* gfx;
     static u8 emptyName[] = { 0x3E, 0x3E, 0x3E, 0x3E, 0x3E, 0x3E, 0x3E, 0x3E };
     FileSelectState* this = (FileSelectState*)thisx;
