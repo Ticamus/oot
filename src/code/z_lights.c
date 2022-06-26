@@ -215,7 +215,7 @@ void Lights_BindAll(Lights* lights, LightNode* listHead, Vec3f* refPos, PlayStat
     }
 }
 
-LightNode* Lights_FindBufSlot() {
+LightNode* Lights_FindBufSlot(void) {
     LightNode* node;
 
     if (sLightsBuffer.numOccupied >= LIGHTS_BUFFER_SIZE) {

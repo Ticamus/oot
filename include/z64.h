@@ -343,7 +343,7 @@ typedef struct {
     }                   flags;
     /* 0x0128 */ TitleCardContext titleCtx;
     /* 0x0138 */ char   unk_138[0x04];
-    /* 0x013C */ void*  absoluteSpace; // Space used to allocate actor overlays with alloc type ALLOCTYPE_ABSOLUTE
+    /* 0x013C */ void*  absoluteSpace; // Space used to allocate actor overlays with alloc type ACTOROVL_ALLOC_ABSOLUTE
 } ActorContext; // size = 0x140
 
 typedef struct {
@@ -1069,6 +1069,10 @@ typedef struct GameState {
 } GameState; // size = 0xA4
 
 typedef struct {
+    /* 0x00 */ GameState state;
+} SetupState; // size = 0xA4
+
+typedef struct {
     /* 0x0000 */ GameState state;
     /* 0x00A4 */ u8* staticSegment;
     /* 0x00A8 */ View view;
@@ -1082,17 +1086,17 @@ typedef struct {
     /* 0x01E0 */ char unk_1E0[0x01];
     /* 0x01E1 */ u8 exit;
     /* 0x01E2 */ char unk_1E2[0x06];
-} TitleContext; // size = 0x1E8
+} ConsoleLogoState; // size = 0x1E8
 
-struct SelectContext;
+struct MapSelectState;
 
 typedef struct {
     /* 0x00 */ char* name;
-    /* 0x04 */ void (*loadFunc)(struct SelectContext*, s32);
+    /* 0x04 */ void (*loadFunc)(struct MapSelectState*, s32);
     /* 0x08 */ s32 entranceIndex;
 } SceneSelectEntry; // size = 0xC
 
-typedef struct SelectContext {
+typedef struct MapSelectState {
     /* 0x0000 */ GameState state;
     /* 0x00A8 */ View view;
     /* 0x01D0 */ s32 count;
@@ -1112,13 +1116,13 @@ typedef struct SelectContext {
     /* 0x0230 */ s32 lockDown;
     /* 0x0234 */ s32 unk_234; // unused
     /* 0x0238 */ u8* staticSegment;
-} SelectContext; // size = 0x240
+} MapSelectState; // size = 0x240
 
 typedef struct {
     /* 0x0000 */ GameState state;
     /* 0x00A4 */ u8* staticSegment;
     /* 0x00A8 */ View view;
-} SampleContext; // size = 0x1D0
+} SampleState; // size = 0x1D0
 
 typedef struct {
     /* 0x00 */ u8 byte0;
@@ -1208,7 +1212,7 @@ typedef struct PlayState {
     /* 0x1241B */ u8 transitionMode; // "fbdemo_wipe_modem"
     /* 0x1241C */ TransitionFade transitionFade;
     /* 0x12428 */ char unk_12428[0x3];
-    /* 0x1242B */ u8 unk_1242B;
+    /* 0x1242B */ u8 viewpoint; // toggleable camera setting by shops or player. Is also equal to the bgCamIndex + 1
     /* 0x1242C */ SceneTableEntry* loadedScene;
     /* 0x12430 */ char unk_12430[0xE8];
 } PlayState; // size = 0x12518
@@ -1216,7 +1220,7 @@ typedef struct PlayState {
 typedef struct {
     /* 0x0000 */ GameState state;
     /* 0x00A8 */ View view;
-} OpeningContext; // size = 0x1D0
+} TitleSetupState; // size = 0x1D0
 
 typedef struct {
     /* 0x00000 */ GameState state;
@@ -1295,7 +1299,7 @@ typedef struct {
     /* 0x1CAD2 */ s16 kbdY;
     /* 0x1CAD4 */ s16 newFileNameCharCount;
     /* 0x1CAD6 */ s16 unk_1CAD6[5];
-} FileChooseContext; // size = 0x1CAE0
+} FileSelectState; // size = 0x1CAE0
 
 typedef enum {
     DPM_UNK = 0,
@@ -1345,6 +1349,20 @@ typedef struct {
     /* 0x24 */ s16 unk_24;
 } struct_80034A14_arg1; // size = 0x28
 
+// Macros for `EntranceInfo.field`
+#define ENTRANCE_INFO_CONTINUE_BGM_FLAG (1 << 15)
+#define ENTRANCE_INFO_DISPLAY_TITLE_CARD_FLAG (1 << 14)
+#define ENTRANCE_INFO_END_TRANS_TYPE_MASK 0x3F80
+#define ENTRANCE_INFO_END_TRANS_TYPE_SHIFT 7
+#define ENTRANCE_INFO_END_TRANS_TYPE(field)          \
+    (((field) >> ENTRANCE_INFO_END_TRANS_TYPE_SHIFT) \
+     & (ENTRANCE_INFO_END_TRANS_TYPE_MASK >> ENTRANCE_INFO_END_TRANS_TYPE_SHIFT))
+#define ENTRANCE_INFO_START_TRANS_TYPE_MASK 0x7F
+#define ENTRANCE_INFO_START_TRANS_TYPE_SHIFT 0
+#define ENTRANCE_INFO_START_TRANS_TYPE(field)          \
+    (((field) >> ENTRANCE_INFO_START_TRANS_TYPE_SHIFT) \
+     & (ENTRANCE_INFO_START_TRANS_TYPE_MASK >> ENTRANCE_INFO_START_TRANS_TYPE_SHIFT))
+
 typedef struct {
     /* 0x00 */ s8  scene;
     /* 0x01 */ s8  spawn;
@@ -1366,11 +1384,11 @@ typedef struct {
     /* 0x2C */ u32       instanceSize;
 } GameStateOverlay; // size = 0x30
 
-typedef struct PreNMIContext {
+typedef struct {
     /* 0x00 */ GameState state;
     /* 0xA4 */ u32       timer;
     /* 0xA8 */ UNK_TYPE4 unk_A8;
-} PreNMIContext; // size = 0xAC
+} PreNMIState; // size = 0xAC
 
 typedef enum {
     /*  1 */ F_8F = 1,

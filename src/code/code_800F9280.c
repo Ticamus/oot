@@ -16,7 +16,12 @@ u8 sSeqCmdWrPos = 0;
 u8 sSeqCmdRdPos = 0;
 u8 D_80133408 = 0;
 u8 D_8013340C = 1;
-u8 D_80133410[] = { 0, 1, 2, 3 };
+u8 sSoundModeList[] = {
+    SOUNDMODE_STEREO,
+    SOUNDMODE_HEADSET,
+    SOUNDMODE_SURROUND,
+    SOUNDMODE_MONO,
+};
 u8 gAudioSpecId = 0;
 u8 D_80133418 = 0;
 
@@ -96,9 +101,10 @@ typedef enum {
 } SeqCmdType;
 
 void Audio_ProcessSeqCmd(u32 cmd) {
-    s32 pad[2];
+    s32 pad;
     u16 fadeTimer;
     u16 channelMask;
+    u32 channelMaskReversed;
     u16 val;
     u8 oldSpec;
     u8 spec;
@@ -305,9 +311,10 @@ void Audio_ProcessSeqCmd(u32 cmd) {
                 // stop channels
                 Audio_QueueCmdS8(0x08000000 | _SHIFTL(playerIdx, 16, 8) | 0xFF00, 1);
             }
-            if ((channelMask ^ 0xFFFF) != 0) {
+            channelMaskReversed = channelMask ^ 0xFFFF;
+            if (channelMaskReversed != 0) {
                 // with channel mask ~channelMask...
-                Audio_QueueCmdU16(0x90000000 | _SHIFTL(playerIdx, 16, 8), (channelMask ^ 0xFFFF));
+                Audio_QueueCmdU16(0x90000000 | _SHIFTL(playerIdx, 16, 8), channelMaskReversed);
                 // unstop channels
                 Audio_QueueCmdS8(0x08000000 | _SHIFTL(playerIdx, 16, 8) | 0xFF00, 0);
             }
@@ -340,7 +347,7 @@ void Audio_ProcessSeqCmd(u32 cmd) {
             switch (subOp) {
                 case 0:
                     // set sound mode
-                    Audio_QueueCmdS32(0xF0000000, D_80133410[val]);
+                    Audio_QueueCmdS32(0xF0000000, sSoundModeList[val]);
                     break;
                 case 1:
                     // set sequence starting disabled?

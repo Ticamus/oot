@@ -3,8 +3,10 @@
 void TitleSetup_InitImpl(GameState* gameState) {
     /*
     // vanilla
-    gameState->running = false;
-    SET_NEXT_GAMESTATE(gameState, Title_Init, TitleContext);
+    osSyncPrintf("ゼルダ共通データ初期化\n"); // "Zelda common data initalization"
+    SaveContext_Init();
+    this->state.running = false;
+    SET_NEXT_GAMESTATE(&this->state, ConsoleLogo_Init, ConsoleLogoState);
     */
 
     gameState->running = false;
@@ -20,10 +22,12 @@ void TitleSetup_InitImpl(GameState* gameState) {
     SET_NEXT_GAMESTATE(gameState, Play_Init, PlayState);
 }
 
-void TitleSetup_Destroy(GameState* gameState) {
+void Setup_Destroy(GameState* thisx) {
 }
 
-void TitleSetup_Init(GameState* gameState) {
-    gameState->destroy = TitleSetup_Destroy;
-    TitleSetup_InitImpl(gameState);
+void Setup_Init(GameState* thisx) {
+    SetupState* this = (SetupState*)thisx;
+
+    this->state.destroy = Setup_Destroy;
+    Setup_InitImpl(this);
 }
