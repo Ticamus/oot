@@ -83,6 +83,8 @@ static bool parse_flags(char *str, unsigned int *flags)
             f |= FLAG_OBJECT;
         else if (strcmp(str, "RAW") == 0)
             f |= FLAG_RAW;
+        else if (strcmp(str, "NOLOAD") == 0)
+            f |= FLAG_NOLOAD;
         else
             return false;
 
@@ -138,6 +140,7 @@ static const char *const stmtNames[] =
     [STMT_stack]     = "stack",
     [STMT_increment] = "increment",
     [STMT_pad_text]  = "pad_text",
+    [STMT_compress]  = "compress",
 };
 
 STMTId get_stmt_id_by_stmt_name(const char *stmtName, int lineNum) {
@@ -158,6 +161,7 @@ bool parse_segment_statement(struct Segment *currSeg, STMTId stmt, char* args, i
         util_fatal_error("line %i: duplicate '%s' statement", lineNum, stmtNames[stmt]);
 
     currSeg->fields |= 1 << stmt;
+    currSeg->compress = false;
 
     // statements valid within a segment definition
     switch (stmt)
@@ -223,6 +227,9 @@ bool parse_segment_statement(struct Segment *currSeg, STMTId stmt, char* args, i
     case STMT_pad_text:
         currSeg->includes[currSeg->includesCount - 1].linkerPadding += 0x10;
         break;
+    case STMT_compress:
+                    currSeg->compress = true;
+                    break;
     default:
         fprintf(stderr, "warning: '%s' is not implemented\n", stmtNames[stmt]);
         break;
@@ -364,3 +371,71 @@ void free_rom_spec(struct Segment *segments, int segment_count)
     }
     free(segments);
 }
+
+/*
+beginseg
+    name "ovl_Shot_Sun"
+    include "build/src/overlays/actors/ovl_Shot_Sun/z_shot_sun.o"
+    include "build/src/overlays/actors/ovl_Shot_Sun/ovl_Shot_Sun_reloc.o"
+endseg
+
+//CUSTOM
+
+beginseg
+    name "ovl_Box_Warp"
+    include "build/src/overlays/actors/ovl_Box_Warp/t_box_warp.o"
+    include "build/src/overlays/actors/ovl_Box_Warp/ovl_Box_Warp_reloc.o"
+endseg
+
+
+beginseg
+    name "ovl_Bg_Market_Step"
+    include "build/src/overlays/actors/ovl_Bg_Market_Step/z_bg_market_step.o"
+    include "build/src/overlays/actors/ovl_Bg_Market_Step/ovl_Bg_Market_Step_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Shutter"
+    include "build/src/overlays/actors/ovl_Obj_Shutter/z_obj_shutter.o"
+    include "build/src/overlays/actors/ovl_Obj_Shutter/ovl_Obj_Shutter_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Bell"
+    include "build/src/overlays/actors/ovl_Obj_Bell/z_obj_bell.o"
+    include "build/src/overlays/actors/ovl_Obj_Bell/ovl_Obj_Bell_reloc.o"
+endseg
+
+
+
+
+beginseg
+    name "object_zl4"
+    romalign 0x1000
+    include "build/assets/objects/object_zl4/object_zl4.o"
+    number 6
+endseg
+
+// CUSTOM
+beginseg
+    name "object_market_obj"
+    romalign 0x1000
+    number 6
+    include "build/assets/objects/object_market_obj/object_market_obj.o"
+endseg
+
+beginseg
+    name "object_f53_obj"
+    romalign 0x1000
+    number 6
+    include "build/assets/objects/object_f53_obj/object_f53_obj.o"
+endseg
+
+beginseg
+    name "object_f52_obj"
+    romalign 0x1000
+    number 6
+    include "build/assets/objects/object_f52_obj/object_f52_obj.o"
+endseg
+
+//
