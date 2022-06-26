@@ -1136,8 +1136,14 @@ void Play_Draw(PlayState* this) {
             this->billboardMtxF.mf[3][0] = this->billboardMtxF.mf[3][1] = this->billboardMtxF.mf[3][2] = 0.0f;
         // This transpose is where the viewing matrix is properly converted into a billboard matrix
         Matrix_Transpose(&this->billboardMtxF);
-        this->billboardMtx = Matrix_MtxFToMtx(Matrix_CheckFloats(&this->billboardMtxF, "../z_play.c", 4005),
-                                              Graph_Alloc(gfxCtx, sizeof(Mtx)));
+        /*this->billboardMtx = Matrix_MtxFToMtx(Matrix_CheckFloats(&this->billboardMtxF, "../z_play.c", 4005),
+                                              Graph_Alloc(gfxCtx, sizeof(Mtx)));*/
+
+        this->billboardMtx = Graph_Alloc(gfxCtx, 2 * sizeof(Mtx));
+        Matrix_MtxFToMtx(Matrix_CheckFloats(&this->billboardMtxF, __FILE__, __LINE__), &this->billboardMtx[0]);
+
+        Matrix_RotateY((f32) (s16) (Camera_GetCamDirYaw(this->cameraPtrs[this->activeCamId]) + 0x8000) * 0.0000958738f, MTXMODE_NEW);
+        Matrix_ToMtx(&this->billboardMtx[1], __FILE__, __LINE__);
 
         gSPSegment(POLY_OPA_DISP++, 0x01, this->billboardMtx);
 

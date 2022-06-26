@@ -164,7 +164,7 @@ void Matrix_RotateX(f32 x, u8 mode) {
     }
 }
 
-void Matrix_RotateXS(s16 x, MatrixMode mode) {
+void Matrix_RotateXS(s16 x, u8 mode) {
     MtxF* cmf;
     f32 sin;
     f32 cos;
@@ -292,7 +292,7 @@ void Matrix_RotateY(f32 y, u8 mode) {
     }
 }
 
-void Matrix_RotateYS(s16 y, MatrixMode mode) {
+void Matrix_RotateYS(s16 y, u8 mode) {
     MtxF* cmf;
     f32 sin;
     f32 cos;
