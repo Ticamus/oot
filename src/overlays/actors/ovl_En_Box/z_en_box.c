@@ -116,8 +116,6 @@ void EnBox_Init(Actor* thisx, PlayState* play2) {
     this->switchFlag = this->dyna.actor.world.rot.z;
     this->dyna.actor.minVelocityY = -50.0f;
 
-    if (play) {} // helps the compiler store play2 into s1
-
     if (Flags_GetTreasure(play, this->dyna.actor.params & 0x1F)) {
         this->alpha = 255;
         this->iceSmokeTimer = 100;

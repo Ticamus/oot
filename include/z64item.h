@@ -282,7 +282,7 @@ typedef enum {
     /* 0x86 */ ITEM_RUPEE_RED,
     /* 0x87 */ ITEM_RUPEE_PURPLE,
     /* 0x88 */ ITEM_RUPEE_GOLD,
-    /* 0x89 */ ITEM_INVALID_8,
+    /* 0x89 */ ITEM_ROUPIR,
     /* 0x8A */ ITEM_STICKS_5,
     /* 0x8B */ ITEM_STICKS_10,
     /* 0x8C */ ITEM_NUTS_5,
@@ -390,6 +390,7 @@ typedef enum {
     /* 0x4C */ GI_RUPEE_GREEN,
     /* 0x4D */ GI_RUPEE_BLUE,
     /* 0x4E */ GI_RUPEE_RED,
+    /* 0x4E */ 
     /* 0x4F */ GI_HEART_CONTAINER_2,
     /* 0x50 */ GI_MILK,
     /* 0x51 */ GI_MASK_GORON,
@@ -412,7 +413,7 @@ typedef enum {
     /* 0x62 */ GI_STICKS_10,
     /* 0x63 */ GI_NUTS_5_2,
     /* 0x64 */ GI_NUTS_10,
-    /* 0x65 */ GI_BOMBS_1,
+    /* 0x65 */ GI_ROUPIR,
     /* 0x66 */ GI_BOMBS_10,
     /* 0x67 */ GI_BOMBS_20,
     /* 0x68 */ GI_BOMBS_30,
@@ -437,6 +438,7 @@ typedef enum {
     /* 0x7B */ GI_BULLET_BAG_50,
     /* 0x7C */ GI_ICE_TRAP, // freezes link when opened from a chest
     /* 0x7D */ GI_TEXT_0, // no model appears over Link, shows text id 0 (pocket egg)
+               
     /* 0x7E */ GI_MAX
 } GetItemID;
 
@@ -552,12 +554,14 @@ typedef enum {
     /* 0x6C */ GID_RUPEE_GREEN,
     /* 0x6D */ GID_RUPEE_BLUE,
     /* 0x6E */ GID_RUPEE_RED,
+               GID_ROUPIR,   
     /* 0x6F */ GID_BIG_POE,
     /* 0x70 */ GID_RUPEE_PURPLE,
     /* 0x71 */ GID_RUPEE_GOLD,
     /* 0x72 */ GID_BULLET_BAG_50,
     /* 0x73 */ GID_SWORD_KOKIRI,
     /* 0x74 */ GID_SKULL_TOKEN_2,
+    
     /* 0x75 */ GID_MAX
 } GetItemDrawID;
 

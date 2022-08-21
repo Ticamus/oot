@@ -283,7 +283,7 @@ static SceneSelectEntry sScenes[] = {
     // "115: Hyrule Cutscenes" (Cutscene Map)
     { "115:" GFXP_KATAKANA "ﾊｲﾗﾙ ﾃﾞﾓ", MapSelect_LoadGame, ENTR_HIRAL_DEMO_0 },
     // "116: Special Room (Treasure Chest Warp)" (Ganondorf Test Room)
-    { "116:" GFXP_HIRAGANA "ﾍﾞｯｼﾂ (ﾀｶﾗﾊﾞｺ" GFXP_KATAKANA "ﾜｰﾌﾟ)", MapSelect_LoadGame, ENTR_BESITU_0 },
+    { "116:Temporary Test Map", MapSelect_LoadGame, ENTR_BESITU_0 },
     // "117: Sasaki Test" (Sasa Test)
     { "117:CLOCK TOWN ALLEY", MapSelect_LoadGame, ENTR_SASATEST_0 },
     // "118: Test Map" (Jungle Gym)
@@ -295,9 +295,9 @@ static SceneSelectEntry sScenes[] = {
     // "121: Boss Stalfos Room" (Stalfos Boss Room)
     { "121:CLOCK TOWN EAST", MapSelect_LoadGame, ENTR_SYOTES2_0 },
     // "122: Stal" (Sutaru)
-    { "122:Sutaru", MapSelect_LoadGame, ENTR_SUTARU_0 },
+    { "122:CLOCK TOWN NORTH", MapSelect_LoadGame, ENTR_SUTARU_0 },
     // "123: Test Area" (Shooting Gallery)
-    { "123:jikkenjyou", MapSelect_LoadGame, ENTR_TEST_SYATEKIJYOU_0 },
+    { "123:Bomb Shop", MapSelect_LoadGame, ENTR_TEST_SYATEKIJYOU_0 },
     // "124: Depth Test" (Depth Test)
     { "124:CLOCK TOWN SOUTH", MapSelect_LoadGame, ENTR_DEPTH_TEST_0 },
     // "125: Hyrule Garden Game 2" (Early Hyrule Garden Game)

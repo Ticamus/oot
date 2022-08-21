@@ -140,7 +140,7 @@ item_ids = {
     0x86 : "ITEM_RUPEE_RED",
     0x87 : "ITEM_RUPEE_PURPLE",
     0x88 : "ITEM_RUPEE_GOLD",
-    0x89 : "ITEM_INVALID_8",
+    0x89 : "ITEM_ROUPIR",
     0x8A : "ITEM_STICKS_5",
     0x8B : "ITEM_STICKS_10",
     0x8C : "ITEM_NUTS_5",

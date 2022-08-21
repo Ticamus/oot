@@ -1326,7 +1326,7 @@ u8 Item_Give(PlayState* play, u8 item) {
     static s16 sAmmoRefillCounts[] = { 5, 10, 20, 30 }; // Sticks, nuts, bombs
     static s16 sArrowRefillCounts[] = { 5, 10, 30 };
     static s16 sBombchuRefillCounts[] = { 5, 20 };
-    static s16 sRupeeRefillCounts[] = { 1, 5, 20, 50, 200, 10 };
+    static s16 sRupeeRefillCounts[] = { 1, 5, 20, 50, 200, -1 };
     s16 i;
     s16 slot;
     s16 temp;
@@ -1727,7 +1727,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
 
         return item;
-    } else if ((item >= ITEM_RUPEE_GREEN) && (item <= ITEM_INVALID_8)) {
+    } else if ((item >= ITEM_RUPEE_GREEN) && (item <= ITEM_ROUPIR)) {
         Rupees_ChangeBy(sRupeeRefillCounts[item - ITEM_RUPEE_GREEN]);
         return ITEM_NONE;
     } else if (item == ITEM_BOTTLE) {
@@ -1908,7 +1908,7 @@ u8 Item_CheckObtainability(u8 item) {
         } else {
             return item;
         }
-    } else if ((item >= ITEM_RUPEE_GREEN) && (item <= ITEM_INVALID_8)) {
+    } else if ((item >= ITEM_RUPEE_GREEN) && (item <= ITEM_ROUPIR)) {
         return ITEM_NONE;
     } else if (item == ITEM_BOTTLE) {
         return ITEM_NONE;

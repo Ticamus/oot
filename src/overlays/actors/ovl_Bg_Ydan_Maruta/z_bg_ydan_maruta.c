@@ -7,7 +7,7 @@
 #include "z_bg_ydan_maruta.h"
 #include "assets/objects/object_ydan_objects/object_ydan_objects.h"
 
-#define FLAGS 0
+#define FLAGS ACTOR_FLAG_4
 
 void BgYdanMaruta_Init(Actor* thisx, PlayState* play);
 void BgYdanMaruta_Destroy(Actor* thisx, PlayState* play);
@@ -99,7 +99,7 @@ void BgYdanMaruta_Init(Actor* thisx, PlayState* play) {
         DynaPolyActor_Init(&this->dyna, DPM_UNK);
         CollisionHeader_GetVirtual(&gDTFallingLadderCol, &colHeader);
         this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, thisx, colHeader);
-        thisx->home.pos.y += -280.0f;
+        thisx->home.pos.y += -227.0f;
         if (Flags_GetSwitch(play, this->switchFlag)) {
             thisx->world.pos.y = thisx->home.pos.y;
             this->actionFunc = BgYdanMaruta_DoNothing;
@@ -145,7 +145,14 @@ void func_808BEFF4(BgYdanMaruta* this, PlayState* play) {
 }
 
 void func_808BF078(BgYdanMaruta* this, PlayState* play) {
-    if (this->collider.base.acFlags & AC_HIT) {
+    if (Flags_GetSwitch(play, this->switchFlag)) {
+        this->unk_16A = 20;
+        func_80078884(NA_SE_SY_CORRECT_CHIME);
+        this->actionFunc = func_808BF108;
+        //OnePointCutscene_Attention(play, &this->dyna.actor);
+        OnePointCutscene_Init(play, 5000, 50, &this->dyna.actor, CAM_ID_MAIN);
+    }
+    /*if (this->collider.base.acFlags & AC_HIT) {
         this->unk_16A = 20;
         Flags_SetSwitch(play, this->switchFlag);
         func_80078884(NA_SE_SY_CORRECT_CHIME);
@@ -153,7 +160,7 @@ void func_808BF078(BgYdanMaruta* this, PlayState* play) {
         OnePointCutscene_Init(play, 3010, 50, &this->dyna.actor, CAM_ID_MAIN);
     } else {
         CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
-    }
+    }*/
 }
 
 void func_808BF108(BgYdanMaruta* this, PlayState* play) {

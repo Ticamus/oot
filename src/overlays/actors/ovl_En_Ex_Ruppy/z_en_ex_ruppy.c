@@ -376,7 +376,7 @@ void EnExRuppy_Update(Actor* thisx, PlayState* play) {
 
 void EnExRuppy_Draw(Actor* thisx, PlayState* play) {
     static void* rupeeTextures[] = {
-        gRupeeGreenTex, gRupeeBlueTex, gRupeeRedTex, gRupeePinkTex, gRupeeOrangeTex,
+        gRupeeGreenTex, gRupeeBlueTex, gRupeeRedTex, gRupeePinkTex, gRupeeOrangeTex, gRupeeBlackTex,
     };
     s32 pad;
     EnExRuppy* this = (EnExRuppy*)thisx;

@@ -15,8 +15,9 @@ void Setup_InitImpl(SetupState* this) {
     Sram_InitDebugSave();
     Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_DEKU);
     SET_EVENTCHKINF(0xA1);
+    gSaveContext.language = 2;
     gSaveContext.dayTime = CLOCK_TIME(6, 0);
-    gSaveContext.entranceIndex = 0;
+    gSaveContext.entranceIndex = ENTR_YDAN_0;
     gSaveContext.respawnFlag = 0;
     gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = ENTR_LOAD_OPENING;
     SET_NEXT_GAMESTATE(&this->state, Play_Init, PlayState);

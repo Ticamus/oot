@@ -3846,15 +3846,12 @@ beginseg
     include "build/src/overlays/actors/ovl_Shot_Sun/ovl_Shot_Sun_reloc.o"
 endseg
 
-//CUSTOM
-
 beginseg
     name "ovl_Box_Warp"
     compress
     include "build/src/overlays/actors/ovl_Box_Warp/t_box_warp.o"
     include "build/src/overlays/actors/ovl_Box_Warp/ovl_Box_Warp_reloc.o"
 endseg
-
 
 beginseg
     name "ovl_Bg_Market_Step"
@@ -3876,7 +3873,6 @@ beginseg
     include "build/src/overlays/actors/ovl_Obj_Bell/z_obj_bell.o"
     include "build/src/overlays/actors/ovl_Obj_Bell/ovl_Obj_Bell_reloc.o"
 endseg
-//
 
 beginseg
     name "gameplay_keep"
@@ -6933,7 +6929,6 @@ beginseg
     number 6
 endseg
 
-// CUSTOM
 beginseg
     name "object_market_obj"
     compress
@@ -6957,9 +6952,6 @@ beginseg
     number 6
     include "build/assets/objects/object_f52_obj/object_f52_obj.o"
 endseg
-
-//
-
 
 beginseg
     name "g_pn_01"
@@ -7860,7 +7852,9 @@ beginseg
     name "ydan_scene"
     compress
     romalign 0x1000
-    include "build/assets/scenes/dungeons/ydan/ydan_scene.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_scene_main.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_scene_col.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_scene_tex.o"
     number 2
 endseg
 
@@ -7868,7 +7862,9 @@ beginseg
     name "ydan_room_0"
     compress
     romalign 0x1000
-    include "build/assets/scenes/dungeons/ydan/ydan_room_0.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_room_0_main.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_room_0_model_info.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_room_0_model.o"
     number 3
 endseg
 
@@ -7876,7 +7872,9 @@ beginseg
     name "ydan_room_1"
     compress
     romalign 0x1000
-    include "build/assets/scenes/dungeons/ydan/ydan_room_1.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_room_1_main.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_room_1_model_info.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_room_1_model.o"
     number 3
 endseg
 
@@ -7884,79 +7882,9 @@ beginseg
     name "ydan_room_2"
     compress
     romalign 0x1000
-    include "build/assets/scenes/dungeons/ydan/ydan_room_2.o"
-    number 3
-endseg
-
-beginseg
-    name "ydan_room_3"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/ydan/ydan_room_3.o"
-    number 3
-endseg
-
-beginseg
-    name "ydan_room_4"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/ydan/ydan_room_4.o"
-    number 3
-endseg
-
-beginseg
-    name "ydan_room_5"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/ydan/ydan_room_5.o"
-    number 3
-endseg
-
-beginseg
-    name "ydan_room_6"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/ydan/ydan_room_6.o"
-    number 3
-endseg
-
-beginseg
-    name "ydan_room_7"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/ydan/ydan_room_7.o"
-    number 3
-endseg
-
-beginseg
-    name "ydan_room_8"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/ydan/ydan_room_8.o"
-    number 3
-endseg
-
-beginseg
-    name "ydan_room_9"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/ydan/ydan_room_9.o"
-    number 3
-endseg
-
-beginseg
-    name "ydan_room_10"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/ydan/ydan_room_10.o"
-    number 3
-endseg
-
-beginseg
-    name "ydan_room_11"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/ydan/ydan_room_11.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_room_2_main.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_room_2_model_info.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_room_2_model.o"
     number 3
 endseg
 
@@ -8108,7 +8036,9 @@ beginseg
     name "bdan_scene"
     compress
     romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_scene.o"
+    include "build/assets/scenes/dungeons/bdan/bdan_scene_main.o"
+    include "build/assets/scenes/dungeons/bdan/bdan_scene_col.o"
+    include "build/assets/scenes/dungeons/bdan/bdan_scene_tex.o"
     number 2
 endseg
 
@@ -8116,7 +8046,9 @@ beginseg
     name "bdan_room_0"
     compress
     romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_0.o"
+    include "build/assets/scenes/dungeons/bdan/bdan_room_0_main.o"
+    include "build/assets/scenes/dungeons/bdan/bdan_room_0_model_info.o"
+    include "build/assets/scenes/dungeons/bdan/bdan_room_0_model.o"
     number 3
 endseg
 
@@ -8124,119 +8056,9 @@ beginseg
     name "bdan_room_1"
     compress
     romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_1.o"
-    number 3
-endseg
-
-beginseg
-    name "bdan_room_2"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_2.o"
-    number 3
-endseg
-
-beginseg
-    name "bdan_room_3"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_3.o"
-    number 3
-endseg
-
-beginseg
-    name "bdan_room_4"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_4.o"
-    number 3
-endseg
-
-beginseg
-    name "bdan_room_5"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_5.o"
-    number 3
-endseg
-
-beginseg
-    name "bdan_room_6"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_6.o"
-    number 3
-endseg
-
-beginseg
-    name "bdan_room_7"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_7.o"
-    number 3
-endseg
-
-beginseg
-    name "bdan_room_8"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_8.o"
-    number 3
-endseg
-
-beginseg
-    name "bdan_room_9"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_9.o"
-    number 3
-endseg
-
-beginseg
-    name "bdan_room_10"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_10.o"
-    number 3
-endseg
-
-beginseg
-    name "bdan_room_11"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_11.o"
-    number 3
-endseg
-
-beginseg
-    name "bdan_room_12"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_12.o"
-    number 3
-endseg
-
-beginseg
-    name "bdan_room_13"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_13.o"
-    number 3
-endseg
-
-beginseg
-    name "bdan_room_14"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_14.o"
-    number 3
-endseg
-
-beginseg
-    name "bdan_room_15"
-    compress
-    romalign 0x1000
-    include "build/assets/scenes/dungeons/bdan/bdan_room_15.o"
+    include "build/assets/scenes/dungeons/bdan/bdan_room_1_main.o"
+    include "build/assets/scenes/dungeons/bdan/bdan_room_1_model_info.o"
+    include "build/assets/scenes/dungeons/bdan/bdan_room_1_model.o"
     number 3
 endseg
 
@@ -10510,7 +10332,8 @@ beginseg
     name "syatekijyou_scene"
     compress
     romalign 0x1000
-    include "build/assets/scenes/indoors/syatekijyou/syatekijyou_scene.o"
+    include "build/assets/scenes/indoors/syatekijyou/syatekijyou_scene_main.o"
+    include "build/assets/scenes/indoors/syatekijyou/syatekijyou_scene_col.o"
     number 2
 endseg
 
@@ -10518,7 +10341,9 @@ beginseg
     name "syatekijyou_room_0"
     compress
     romalign 0x1000
-    include "build/assets/scenes/indoors/syatekijyou/syatekijyou_room_0.o"
+    include "build/assets/scenes/indoors/syatekijyou/syatekijyou_room_0_main.o"
+    include "build/assets/scenes/indoors/syatekijyou/syatekijyou_room_0_model_info.o"
+    include "build/assets/scenes/indoors/syatekijyou/syatekijyou_room_0_model.o"
     number 3
 endseg
 
@@ -10584,7 +10409,6 @@ beginseg
     compress
     romalign 0x1000
     include "build/assets/scenes/test_levels/sasatest/sasatest_room_0_main.o"
-    include "build/assets/scenes/test_levels/sasatest/sasatest_room_0_model_info.o"
     include "build/assets/scenes/test_levels/sasatest/sasatest_room_0_model.o"
     number 3
 endseg
@@ -11329,7 +11153,8 @@ beginseg
     name "hairal_niwa2_scene"
     compress
     romalign 0x1000
-    include "build/assets/scenes/indoors/hairal_niwa2/hairal_niwa2_scene.o"
+    include "build/assets/scenes/indoors/hairal_niwa2/hairal_niwa2_scene_main.o"
+    include "build/assets/scenes/indoors/hairal_niwa2/hairal_niwa2_scene_col.o"
     number 2
 endseg
 
@@ -11337,7 +11162,9 @@ beginseg
     name "hairal_niwa2_room_0"
     compress
     romalign 0x1000
-    include "build/assets/scenes/indoors/hairal_niwa2/hairal_niwa2_room_0.o"
+    include "build/assets/scenes/indoors/hairal_niwa2/hairal_niwa2_room_0_main.o"
+    include "build/assets/scenes/indoors/hairal_niwa2/hairal_niwa2_room_0_model_info.o"
+    include "build/assets/scenes/indoors/hairal_niwa2/hairal_niwa2_room_0_model.o"
     number 3
 endseg
 
@@ -11817,7 +11644,9 @@ beginseg
     name "besitu_scene"
     compress
     romalign 0x1000
-    include "build/assets/scenes/test_levels/besitu/besitu_scene.o"
+    include "build/assets/scenes/test_levels/besitu/besitu_scene_main.o"
+    include "build/assets/scenes/test_levels/besitu/besitu_scene_col.o"
+    include "build/assets/scenes/test_levels/besitu/besitu_scene_tex.o"
     number 2
 endseg
 
@@ -11825,7 +11654,19 @@ beginseg
     name "besitu_room_0"
     compress
     romalign 0x1000
-    include "build/assets/scenes/test_levels/besitu/besitu_room_0.o"
+    include "build/assets/scenes/test_levels/besitu/besitu_room_0_main.o"
+    include "build/assets/scenes/test_levels/besitu/besitu_room_0_model_info.o"
+    include "build/assets/scenes/test_levels/besitu/besitu_room_0_model.o"
+    number 3
+endseg
+
+beginseg
+    name "besitu_room_1"
+    compress
+    romalign 0x1000
+    include "build/assets/scenes/test_levels/besitu/besitu_room_1_main.o"
+    include "build/assets/scenes/test_levels/besitu/besitu_room_1_model_info.o"
+    include "build/assets/scenes/test_levels/besitu/besitu_room_1_model.o"
     number 3
 endseg
 
@@ -12003,7 +11844,6 @@ beginseg
     name "depth_test_scene"
     romalign 0x1000
     include "build/assets/scenes/test_levels/depth_test/depth_test_scene_main.o"
-    include "build/assets/scenes/test_levels/depth_test/depth_test_scene_col.o"
     number 2
 endseg
 
@@ -12011,7 +11851,5 @@ beginseg
     name "depth_test_room_0"
     romalign 0x1000
     include "build/assets/scenes/test_levels/depth_test/depth_test_room_0_main.o"
-    include "build/assets/scenes/test_levels/depth_test/depth_test_room_0_model_info.o"
-    include "build/assets/scenes/test_levels/depth_test/depth_test_room_0_model.o"
     number 3
 endseg

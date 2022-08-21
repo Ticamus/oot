@@ -465,7 +465,7 @@ void EnGSwitch_DrawPot(Actor* thisx, PlayState* play) {
 }
 
 static void* sRupeeTextures[] = {
-    gRupeeGreenTex, gRupeeBlueTex, gRupeeRedTex, gRupeePinkTex, gRupeeOrangeTex, gRupeeSilverTex,
+    gRupeeGreenTex, gRupeeBlueTex, gRupeeRedTex, gRupeePinkTex, gRupeeOrangeTex, gRupeeSilverTex, gRupeeBlackTex,
 };
 
 void EnGSwitch_DrawRupee(Actor* thisx, PlayState* play) {

@@ -59,7 +59,6 @@ EntranceCutscene sEntranceCutsceneTable[] = {
     { ENTR_SPOT15_0, 1, EVENTCHKINF_A5, gHyruleCastleIntroCs },
     { ENTR_SPOT18_0, 2, EVENTCHKINF_A6, gGoronCityIntroCs },
     { ENTR_TOKINOMA_0, 2, EVENTCHKINF_A7, gTempleOfTimeIntroCs },
-    { ENTR_YDAN_0, 2, EVENTCHKINF_A8, gDekuTreeIntroCs },
     { ENTR_SPOT00_11, 0, EVENTCHKINF_18, gHyruleFieldSouthEponaJumpCs },
     { ENTR_SPOT00_13, 0, EVENTCHKINF_18, gHyruleFieldEastEponaJumpCs },
     { ENTR_SPOT00_12, 0, EVENTCHKINF_18, gHyruleFieldWestEponaJumpCs },
@@ -69,7 +68,6 @@ EntranceCutscene sEntranceCutsceneTable[] = {
     { ENTR_SPOT09_0, 2, EVENTCHKINF_B2, gGerudoValleyIntroCs },
     { ENTR_SPOT12_0, 2, EVENTCHKINF_B3, gGerudoFortressIntroCs },
     { ENTR_SPOT20_0, 2, EVENTCHKINF_B4, gLonLonRanchIntroCs },
-    { ENTR_BDAN_0, 2, EVENTCHKINF_B5, gJabuJabuIntroCs },
     { ENTR_SPOT02_0, 2, EVENTCHKINF_B6, gGraveyardIntroCs },
     { ENTR_SPOT08_2, 2, EVENTCHKINF_B7, gZorasFountainIntroCs },
     { ENTR_SPOT11_0, 2, EVENTCHKINF_B8, gDesertColossusIntroCs },
@@ -90,7 +88,7 @@ EntranceCutscene sEntranceCutsceneTable[] = {
 
 // Unused, seems to be an early list of dungeon entrance cutscene locations
 void* D_8011E304[] = {
-    gDekuTreeIntroCs, gJabuJabuIntroCs, gDcOpeningCs, gMinuetCs, gIceCavernSerenadeCs, gTowerBarrierCs,
+    gTempleOfTimeIntroCs, gTempleOfTimeIntroCs, gDcOpeningCs, gMinuetCs, gIceCavernSerenadeCs, gTowerBarrierCs,
 };
 
 u16 D_8015FCC0;

@@ -350,6 +350,8 @@ DrawItemTableEntry sDrawItemTable[] = {
       { gGiRupeeInnerDL, gGiBlueRupeeInnerColorDL, gGiRupeeOuterDL, gGiBlueRupeeOuterColorDL } },
     // red rupee, OBJECT_GI_RUPY
     { GetItem_DrawSmallRupee, { gGiRupeeInnerDL, gGiRedRupeeInnerColorDL, gGiRupeeOuterDL, gGiRedRupeeOuterColorDL } },
+    // BLACK rupee, OBJECT_GI_RUPY
+    { GetItem_DrawSmallRupee, { gGiRupeeInnerDL, gGiBlackRupeeInnerColorDL, gGiRupeeOuterDL, gGiBlackRupeeOuterColorDL } },
     // big poe, OBJECT_GI_GHOST
     { GetItem_DrawPoes,
       { gGiGhostContainerLidDL, gGiGhostContainerGlassDL, gGiGhostContainerContentsDL, gGiBigPoeColorDL } },

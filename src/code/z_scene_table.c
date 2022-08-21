@@ -106,8 +106,8 @@ void Scene_DrawConfigDefault(PlayState* play) {
 }
 
 void* D_8012A2F8[] = {
-    gYdanTex_00BA18,
-    gYdanTex_00CA18,
+    gEmptyDL,
+    gEmptyDL,
 };
 
 void Scene_DrawConfigYdan(PlayState* play) {
