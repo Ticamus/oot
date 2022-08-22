@@ -166,7 +166,7 @@ s32 EnBomChu_UpdateFloorPoly(EnBomChu* this, CollisionPoly* floorPoly, PlayState
 
             if (magnitude < 0.001f) {
                 EnBomChu_Explode(this, play);
-                return;
+                return false;
             }
 
             this->axisForwards.x *= 1.0f / magnitude;

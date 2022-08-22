@@ -18,7 +18,7 @@ void EnBomBowlPit_GivePrize(EnBomBowlPit* this, PlayState* play);
 void EnBomBowlPit_WaitTillPrizeGiven(EnBomBowlPit* this, PlayState* play);
 void EnBomBowlPit_Reset(EnBomBowlPit* this, PlayState* play);
 
-static s32 sGetItemIds[] = { GI_BOMB_BAG_30, GI_HEART_PIECE, GI_BOMBCHUS_10, GI_BOMBS_1, GI_RUPEE_PURPLE };
+static s32 sGetItemIds[] = { GI_BOMB_BAG_30, GI_HEART_PIECE, GI_BOMBCHUS_10, GI_BOMBS_5, GI_RUPEE_PURPLE };
 
 const ActorInit En_Bom_Bowl_Pit_InitVars = {
     ACTOR_EN_BOM_BOWL_PIT,

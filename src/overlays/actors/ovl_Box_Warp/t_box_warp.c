@@ -188,7 +188,7 @@ void BoxWarp_Open(BoxWarp* this, PlayState* play) {
         } 
 
         if (sfxId != 0) {
-            Audio_PlaySoundGeneral(sfxId, &this->dyna.actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+            Audio_PlaySfxGeneral(sfxId, &this->dyna.actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
                                    &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         }
 

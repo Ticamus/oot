@@ -61,7 +61,7 @@ void ObjShutter_Open(Actor* thisx, PlayState* play) {
     ObjShutter* this = (ObjShutter*)thisx;
 
     this->open = true;
-    Audio_PlayActorSound2(&this->dyna.actor, NA_SE_EV_SLIDE_DOOR_OPEN);
+    Audio_PlayActorSfx2(&this->dyna.actor, NA_SE_EV_SLIDE_DOOR_OPEN);
 }
 
 

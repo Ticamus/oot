@@ -340,7 +340,7 @@ void BgSpot08Iceblock_Init(Actor* thisx, PlayState* play) {
             Actor_SetScale(&this->dyna.actor, 0.1f);
             break;
         case 0x20:
-            Audio_PlayActorSound2(&this->dyna.actor, NA_SE_PL_FREEZE_S);
+            Audio_PlayActorSfx2(&this->dyna.actor, NA_SE_PL_FREEZE_S);
             this->timer = 300; // = 300 = 15 secondes
             //Actor_SetScale(&this->dyna.actor, 0.05f);
             break;
@@ -458,7 +458,7 @@ void BgSpot08Iceblock_Update(Actor* thisx, PlayState* play) {
         if (this->timer > 0) {
             this->timer--;
             if (this->timer == 0) {
-                Audio_PlayActorSound2(&this->dyna.actor, NA_SE_EV_ICE_MELT);
+                Audio_PlayActorSfx2(&this->dyna.actor, NA_SE_EV_ICE_MELT);
             }
         }
         else if (this->scale > 0.0f) {

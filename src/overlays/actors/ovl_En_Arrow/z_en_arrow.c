@@ -259,7 +259,7 @@ void EnArrow_WaterCollision(EnArrow* this, PlayState* play){
             pos.z = this->actor.home.pos.z + (pos.z * temp_f0);
             EffectSsGSplash_Spawn(play, &pos, NULL, NULL, 0, 300);
         }
-        SoundSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EV_DIVE_INTO_WATER_L);
+        SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EV_DIVE_INTO_WATER_L);
 
         EffectSsGRipple_Spawn(play, &pos, 100, 500, 0);
         EffectSsGRipple_Spawn(play, &pos, 100, 500, 4);

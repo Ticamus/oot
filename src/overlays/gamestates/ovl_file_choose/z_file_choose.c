@@ -179,7 +179,7 @@ void FileSelect_UpdateMainMenu(GameState* thisx) {
    
     
     
-    OPEN_DISPS(this->state.gfxCtx, __FILE__, __LINE__);
+    /*OPEN_DISPS(this->state.gfxCtx, __FILE__, __LINE__);
 
     gfx = POLY_OPA_DISP + 1;
     gSPDisplayList(OVERLAY_DISP++, gfx);
@@ -200,24 +200,24 @@ void FileSelect_UpdateMainMenu(GameState* thisx) {
     gSPBranchList(POLY_OPA_DISP, gfx);
     POLY_OPA_DISP = gfx;
 
-    CLOSE_DISPS(this->state.gfxCtx, __FILE__, __LINE__);
+    CLOSE_DISPS(this->state.gfxCtx, __FILE__, __LINE__);*/
 
 
     switch (this->buttonIndex) {
         case FS_BTN_MAIN_FILE_1:
         if (gSaveContext.skyboxTime != 0) { // 4000
-            if ((gSaveContext.skyboxTime > 0x4000) && (gSaveContext.skyboxTime < 0xC000)) {
-                gSaveContext.skyboxTime -= 0x200;
+            if (gSaveContext.skyboxTime >= 0xC000) {
+                gSaveContext.skyboxTime += 0x200;
             }
             else {
-                gSaveContext.skyboxTime += 0x200;
+                gSaveContext.skyboxTime -= 0x200;
             }
             
         }
             break;
         case FS_BTN_MAIN_FILE_2:
-            if (gSaveContext.skyboxTime != 0xC000) {
-            gSaveContext.skyboxTime += (gSaveContext.skyboxTime > 0xC000) ? -0x200 : 0x200;
+            if (gSaveContext.skyboxTime != 0x4000) {
+            gSaveContext.skyboxTime += (gSaveContext.skyboxTime < 0x4000) ? 0x200 : -0x200;
         }
             break;
         case FS_BTN_MAIN_FILE_3:
@@ -225,9 +225,21 @@ void FileSelect_UpdateMainMenu(GameState* thisx) {
             gSaveContext.skyboxTime += (gSaveContext.skyboxTime > 0x8000) ? -0x200 : 0x200;
         }
             break;
+
+        case FS_BTN_MAIN_COPY:
+        case FS_BTN_MAIN_ERASE:
+            if (gSaveContext.skyboxTime != 0xC000 && gSaveContext.skyboxTime != 0x8000) {
+                if ((gSaveContext.skyboxTime >= 0xA000) || (gSaveContext.skyboxTime < 0x8000)) {
+                    gSaveContext.skyboxTime += 0x200;
+                }
+                else {
+                    gSaveContext.skyboxTime -= 0x200;
+                }
+            }
+            break;
         case FS_BTN_MAIN_OPTIONS:
-            if (gSaveContext.skyboxTime != 0x4000) {
-            gSaveContext.skyboxTime += (gSaveContext.skyboxTime > 0x4000) ? -0x200 : 0x200;
+            if (gSaveContext.skyboxTime != 0xC000) {
+            gSaveContext.skyboxTime += (gSaveContext.skyboxTime < 0x4000 || gSaveContext.skyboxTime > 0xC000) ? -0x200 : 0x200;
         }
     }
 
@@ -293,11 +305,11 @@ void FileSelect_UpdateMainMenu(GameState* thisx) {
             }
         }
     } else {
-        if (ABS(this->stickRelY) > 30) {
+        if ((ABS(this->stickRelY) > 30) || (CHECK_BTN_ALL(input->press.button, BTN_DUP) || (CHECK_BTN_ALL(input->press.button, BTN_DDOWN)))) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                  &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 
-            if (this->stickRelY > 30) {
+            if ((this->stickRelY > 30) || (CHECK_BTN_ALL(input->press.button, BTN_DUP))) {
                 this->buttonIndex--;
                 if (this->buttonIndex < FS_BTN_MAIN_FILE_1) {
                     this->buttonIndex = FS_BTN_MAIN_OPTIONS;
@@ -1256,6 +1268,7 @@ void FileSelect_ConfigModeDraw(GameState* thisx) {
 
     // draw options menu
     if ((this->configMode >= CM_MAIN_TO_OPTIONS) && (this->configMode <= CM_OPTIONS_TO_MAIN)) {
+        
         gDPPipeSync(POLY_OPA_DISP++);
         gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2],
@@ -1392,7 +1405,7 @@ void FileSelect_ConfirmFile(GameState* thisx) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         this->selectMode++;
-    } else if (ABS(this->stickRelY) >= 30) {
+    } else if ((ABS(this->stickRelY) >= 30) || CHECK_BTN_ALL(input->press.button, BTN_DUP) || CHECK_BTN_ALL(input->press.button, BTN_DDOWN)) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         this->confirmButtonIndex ^= 1;
@@ -1669,7 +1682,7 @@ void FileSelect_Main(GameState* thisx) {
     this->stickRelX = input->rel.stick_x;
     this->stickRelY = input->rel.stick_y;
 
-    if (this->stickRelX < -30) {
+    if ((this->stickRelX < -30)) {
         if (this->stickXDir == -1) {
             this->inputTimerX--;
             if (this->inputTimerX < 0) {
