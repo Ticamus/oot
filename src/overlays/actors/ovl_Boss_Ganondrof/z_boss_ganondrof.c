@@ -847,8 +847,8 @@ void BossGanondrof_Charge(BossGanondrof* this, PlayState* play) {
                 thisx->world.rot.x = RAD_TO_BINANG(Math_FAtan2F(vecToLink.y, sqrtf(SQ(vecToLink.x) + SQ(vecToLink.z))));
             }
 
-            func_8002D908(thisx);
-            func_8002D7EC(thisx);
+            Actor_UpdateVelocityWithoutGravity(thisx);
+            Actor_UpdatePos(thisx);
             Math_ApproachF(&thisx->speedXZ, 10.0f, 1.0f, 0.5f);
             if ((sqrtf(SQ(dxCenter) + SQ(dzCenter)) > 280.0f) || (thisx->xyzDistToPlayerSq < SQ(100.0f))) {
                 this->work[GND_ACTION_STATE] = CHARGE_FINISH;

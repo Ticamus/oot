@@ -234,10 +234,10 @@ NaviColor sNaviColorList[] = {
     { { 0, 255, 0, 255 }, { 0, 255, 0, 0 } },
 };
 
-// unused
+/* unused
 Gfx D_80115FF0[] = {
     gsSPEndDisplayList(),
-};
+};*/
 
 void func_8002BE64(TargetContext* targetCtx, s32 index, f32 arg2, f32 arg3, f32 arg4) {
     targetCtx->arr_50[index].pos.x = arg2;
@@ -840,7 +840,7 @@ void Actor_Destroy(Actor* actor, PlayState* play) {
     }
 }
 
-void func_8002D7EC(Actor* actor) {
+void Actor_UpdatePos(Actor* actor) {
     f32 speedRate = R_UPDATE_RATE * 0.5f;
 
     actor->world.pos.x += (actor->velocity.x * speedRate) + actor->colChkInfo.displacement.x;
@@ -848,7 +848,7 @@ void func_8002D7EC(Actor* actor) {
     actor->world.pos.z += (actor->velocity.z * speedRate) + actor->colChkInfo.displacement.z;
 }
 
-void func_8002D868(Actor* actor) {
+void Actor_UpdateVelocityWithGravity(Actor* actor) {
     actor->velocity.x = Math_SinS(actor->world.rot.y) * actor->speedXZ;
     actor->velocity.z = Math_CosS(actor->world.rot.y) * actor->speedXZ;
 
@@ -859,11 +859,11 @@ void func_8002D868(Actor* actor) {
 }
 
 void Actor_MoveForward(Actor* actor) {
-    func_8002D868(actor);
-    func_8002D7EC(actor);
+    Actor_UpdateVelocityWithGravity(actor);
+    Actor_UpdatePos(actor);
 }
 
-void func_8002D908(Actor* actor) {
+void Actor_UpdateVelocityWithoutGravity(Actor* actor) {
     f32 sp24 = Math_CosS(actor->world.rot.x) * actor->speedXZ;
 
     actor->velocity.x = Math_SinS(actor->world.rot.y) * sp24;
@@ -872,8 +872,8 @@ void func_8002D908(Actor* actor) {
 }
 
 void func_8002D97C(Actor* actor) {
-    func_8002D908(actor);
-    func_8002D7EC(actor);
+    Actor_UpdateVelocityWithoutGravity(actor);
+    Actor_UpdatePos(actor);
 }
 
 void func_8002D9A4(Actor* actor, f32 arg1) {
@@ -3267,6 +3267,14 @@ Actor* func_80033684(PlayState* play, Actor* explosiveActor) {
 void Actor_ChangeCategory(PlayState* play, ActorContext* actorCtx, Actor* actor, u8 actorCategory) {
     Actor_RemoveFromCategory(play, actorCtx, actor);
     Actor_AddToCategory(actorCtx, actor, actorCategory);
+}
+
+void func_800BE568(Actor* actor, ColliderSphere* collider) {
+    if (collider->info.acHitInfo->toucher.dmgFlags & (0x10000 | 0x2000 | 0x1000 | 0x800 | 0x20)) {
+        actor->world.rot.y = collider->base.ac->shape.rot.y;
+    } else {
+        actor->world.rot.y = Actor_WorldYawTowardActor(collider->base.ac, actor);
+    }
 }
 
 /**

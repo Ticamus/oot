@@ -3877,6 +3877,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_En_Mkk"
+    compress
+    include "build/src/overlays/actors/ovl_En_Mkk/z_en_mkk.o"
+    include "build/src/overlays/actors/ovl_En_Mkk/ovl_En_Mkk_reloc.o"
+endseg
+
+beginseg
     name "gameplay_keep"
     compress
     romalign 0x1000
@@ -6953,6 +6960,14 @@ beginseg
     romalign 0x1000
     number 6
     include "build/assets/objects/object_f52_obj/object_f52_obj.o"
+endseg
+
+beginseg
+    name "object_mkk"
+    compress
+    romalign 0x1000
+    number 6
+    include "build/assets/objects/object_mkk/object_mkk.o"
 endseg
 
 beginseg

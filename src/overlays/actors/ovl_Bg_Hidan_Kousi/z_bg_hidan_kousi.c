@@ -129,7 +129,7 @@ void func_80889C18(BgHidanKousi* this, PlayState* play) {
 }
 
 void func_80889C90(BgHidanKousi* this, PlayState* play) {
-    func_8002D7EC(&this->dyna.actor);
+    Actor_UpdatePos(&this->dyna.actor);
     if (D_80889E40[this->dyna.actor.params & 0xFF] <
         Math_Vec3f_DistXYZ(&this->dyna.actor.home.pos, &this->dyna.actor.world.pos)) {
         func_80889ACC(this);

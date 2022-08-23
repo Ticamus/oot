@@ -355,7 +355,7 @@ void EnTp_Fragment_SetupFade(EnTp* this) {
 }
 
 void EnTp_Fragment_Fade(EnTp* this, PlayState* play) {
-    func_8002D7EC(&this->actor);
+    Actor_UpdatePos(&this->actor);
     this->alpha -= 20;
 
     if (this->alpha < 20) {

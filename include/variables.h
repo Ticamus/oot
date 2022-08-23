@@ -251,4 +251,6 @@ extern GfxPool gGfxPools[2]; // 0x24820 bytes
 extern u8 gAudioHeap[0x38000]; // 0x38000 bytes
 extern u8 gSystemHeap[];
 
+extern Gfx sSetupDL[SETUPDL_MAX][6];
+
 #endif

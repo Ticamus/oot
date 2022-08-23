@@ -195,7 +195,7 @@ s32 EnBomChu_UpdateFloorPoly(EnBomChu* this, CollisionPoly* floorPoly, PlayState
 
             // A hack for preventing bombchus from sticking to ledges.
             // The visual rotation reverts the sign inversion (shape.rot.x = -world.rot.x).
-            // The better fix would be making func_8002D908 compute XYZ velocity better,
+            // The better fix would be making Actor_UpdateVelocityWithoutGravity compute XYZ velocity better,
             // or not using it and make the bombchu compute its own velocity.
             this->actor.world.rot.x = -this->actor.world.rot.x;
         }

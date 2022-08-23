@@ -321,6 +321,7 @@ void EffectSsFCircle_Spawn(PlayState* play, Actor* actor, Vec3f* pos, s16 radius
 void EffectSsDeadDb_Spawn(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep,
                           s16 primR, s16 primG, s16 primB, s16 primA, s16 envR, s16 envG, s16 envB, s16 unused,
                           s32 arg14, s16 playSfx);
+void EffectSsDeadDb_SpawnMM(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, Color_RGBA8* prim, Color_RGBA8* env, s16 scale, s16 scaleStep, s32 unk);
 void EffectSsDeadDd_Spawn(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep,
                           s16 primR, s16 primG, s16 primB, s16 alpha, s16 envR, s16 envG, s16 envB, s16 alphaStep,
                           s32 life);
@@ -372,10 +373,10 @@ void Actor_Kill(Actor* actor);
 void Actor_SetFocus(Actor* actor, f32 yOffset);
 void Actor_SetScale(Actor* actor, f32 scale);
 void Actor_SetObjectDependency(PlayState* play, Actor* actor);
-void func_8002D7EC(Actor* actor);
-void func_8002D868(Actor* actor);
+void Actor_UpdatePos(Actor* actor);
+void Actor_UpdateVelocityWithGravity(Actor* actor);
 void Actor_MoveForward(Actor* actor);
-void func_8002D908(Actor* actor);
+void Actor_UpdateVelocityWithoutGravity(Actor* actor);
 void func_8002D97C(Actor* actor);
 void func_8002D9A4(Actor* actor, f32 arg1);
 s16 Actor_WorldYawTowardActor(Actor* actorA, Actor* actorB);
@@ -521,6 +522,7 @@ u8 Actor_ApplyDamage(Actor* actor);
 void Actor_SetDropFlag(Actor* actor, ColliderInfo* colInfo, s32 freezeFlag);
 void Actor_SetDropFlagJntSph(Actor* actor, ColliderJntSph* jntSph, s32 freezeFlag);
 void func_80035844(Vec3f* arg0, Vec3f* arg1, Vec3s* arg2, s32 arg3);
+void func_800BE568(Actor* actor, ColliderSphere* collider);
 Actor* func_800358DC(Actor* actor, Vec3f* spawnPos, Vec3s* spawnRot, f32* arg3, s32 timer, s16* unused,
                      PlayState* play, s16 params, Gfx* dList);
 void func_800359B8(Actor* actor, s16 arg1, Vec3s* arg2);
@@ -2280,5 +2282,16 @@ void TitleSetup_Init(GameState* thisx);
 void TitleSetup_Destroy(GameState* thisx);
 void FileSelect_Init(GameState* thisx);
 void FileSelect_Destroy(GameState* thisx);
+
+// MATRIX
+
+/* Stack operations */
+
+void Matrix_Init(struct GameState* gameState);
+void Matrix_Push(void);
+void Matrix_Pop(void);
+void Matrix_Get(MtxF* dest);
+void Matrix_Put(MtxF* src);
+MtxF* Matrix_GetCurrent(void);
 
 #endif

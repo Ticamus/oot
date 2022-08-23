@@ -1073,6 +1073,27 @@ void EffectSsDeadDb_Spawn(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* a
     EffectSs_Spawn(play, EFFECT_SS_DEAD_DB, 120, &initParams);
 }
 
+void EffectSsDeadDb_SpawnMM(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, Color_RGBA8* prim,
+                          Color_RGBA8* env, s16 scale, s16 scaleStep, s32 unk) {
+    EffectSsDeadDbInitParams initParams;
+
+    Math_Vec3f_Copy(&initParams.pos, pos);
+    Math_Vec3f_Copy(&initParams.velocity, velocity);
+    Math_Vec3f_Copy(&initParams.accel, accel);
+    initParams.scale = scale;
+    initParams.scaleStep = scaleStep;
+    initParams.primColor.r = prim->r;
+    initParams.primColor.g = prim->g;
+    initParams.primColor.b = prim->b;
+    initParams.primColor.a = prim->a;
+    initParams.envColor.r = env->r;
+    initParams.envColor.g = env->g;
+    initParams.envColor.b = env->b;
+    initParams.unk_34 = unk;
+
+    EffectSs_Spawn(play, EFFECT_SS_DEAD_DB, 120, &initParams);
+}
+
 // EffectSsDeadDd Spawn Functions
 
 void EffectSsDeadDd_Spawn(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep,

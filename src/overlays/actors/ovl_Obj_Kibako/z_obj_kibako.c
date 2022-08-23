@@ -232,7 +232,7 @@ void ObjKibako_Held(ObjKibako* this, PlayState* play) {
         } else {
             ObjKibako_SetupThrown(this);
             ObjKibako_ApplyGravity(this);
-            func_8002D7EC(&this->actor);
+            Actor_UpdatePos(&this->actor);
         }
         Actor_UpdateBgCheckInfo(play, &this->actor, 19.0f, 20.0f, 0.0f, UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2);
     }
@@ -262,7 +262,7 @@ void ObjKibako_Thrown(ObjKibako* this, PlayState* play) {
         Actor_Kill(&this->actor);
     } else {
         ObjKibako_ApplyGravity(this);
-        func_8002D7EC(&this->actor);
+        Actor_UpdatePos(&this->actor);
         Actor_UpdateBgCheckInfo(play, &this->actor, 19.0f, 20.0f, 0.0f, UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2);
         Collider_UpdateCylinder(&this->actor, &this->collider);
         CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);

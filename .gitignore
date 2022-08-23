@@ -41,6 +41,7 @@ tools/z64compress
 z64compress_wrapper.py
 
 # Assets
+assets_vanilla/*
 *.png
 *.jpg
 *.mdli

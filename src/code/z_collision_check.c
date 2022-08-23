@@ -1245,11 +1245,9 @@ void CollisionCheck_DrawCollision(PlayState* play, CollisionCheckContext* colChk
     }
 }
 
-static ColChkResetFunc sATResetFuncs[] = {
-    Collider_ResetJntSphAT,
-    Collider_ResetCylinderAT,
-    Collider_ResetTrisAT,
-    Collider_ResetQuadAT,
+ColChkResetFunc sATResetFuncs[] = {
+    Collider_ResetJntSphAT, Collider_ResetCylinderAT, Collider_ResetTrisAT,
+    Collider_ResetQuadAT,   Collider_ResetSphereAT,
 };
 
 /**

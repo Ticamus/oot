@@ -415,12 +415,12 @@ void EnHonotrap_FlameChase(EnHonotrap* this, PlayState* play) {
     Math_ScaledStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 0x300);
     Math_StepToF(&this->actor.speedXZ, 3.0f, 0.1f);
     this->actor.gravity = (-this->actor.yDistToPlayer < 10.0f) ? 0.08f : -0.08f;
-    func_8002D868(&this->actor);
+    Actor_UpdateVelocityWithGravity(&this->actor);
     if (this->actor.velocity.y > 1.0f) {
         this->actor.velocity.y = 1.0f;
     }
     this->actor.velocity.y *= 0.95f;
-    func_8002D7EC(&this->actor);
+    Actor_UpdatePos(&this->actor);
     Actor_UpdateBgCheckInfo(play, &this->actor, 7.0f, 10.0f, 0.0f,
                             UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2 | UPDBGCHECKINFO_FLAG_3 |
                                 UPDBGCHECKINFO_FLAG_4);
