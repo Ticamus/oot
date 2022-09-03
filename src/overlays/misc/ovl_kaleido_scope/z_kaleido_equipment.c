@@ -114,7 +114,7 @@ void KaleidoScope_DrawPlayerWork(PlayState* play) {
 }
 
 // Wrong prototype; this function is called with `play` even though it has no arguments
-void KaleidoScope_ProcessPlayerPreRender(PlayState* play);
+//void KaleidoScope_ProcessPlayerPreRender(PlayState* play);
 
 void KaleidoScope_DrawEquipment(PlayState* play) {
     PauseContext* pauseCtx = &play->pauseCtx;
@@ -585,10 +585,10 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
         KaleidoScope_SetupPlayerPreRender(play);
     }
 
-    if ((pauseCtx->unk_1E4 == 7) && (sEquipTimer == 9)) {
+    /*if ((pauseCtx->unk_1E4 == 7) && (sEquipTimer == 9)) {
         //! @bug: This function shouldn't take any arguments
         KaleidoScope_ProcessPlayerPreRender(play);
-    }
+    }*/
 
     gSPSegment(POLY_OPA_DISP++, 0x07, pauseCtx->playerSegment);
     gSPSegment(POLY_OPA_DISP++, 0x08, pauseCtx->iconItemSegment);

@@ -50,6 +50,8 @@ void Main(void* arg) {
     PreNmiBuff_Init(gAppNmiBufferPtr);
     Fault_Init();
     SysCfb_Init(0);
+    Check_ExpansionPak();
+    
     systemHeapStart = (u32)gSystemHeap;
     fb = SysCfb_GetFbPtr(0);
     gSystemHeapSize = fb - systemHeapStart;

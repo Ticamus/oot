@@ -2294,4 +2294,8 @@ void Matrix_Get(MtxF* dest);
 void Matrix_Put(MtxF* src);
 MtxF* Matrix_GetCurrent(void);
 
+// CUSTOM
+
+void Check_ExpansionPak(void);
+
 #endif

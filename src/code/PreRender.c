@@ -349,6 +349,7 @@ void func_800C24E0(PreRender* this, Gfx** gfxp) {
     func_800C1258(this, gfxp);
 }
 
+/*
 void func_800C2500(PreRender* this, s32 x, s32 y) {
     s32 i;
     s32 j;
@@ -371,14 +372,14 @@ void func_800C2500(PreRender* this, s32 x, s32 y) {
     u32 pxG3;
     u32 pxB3;
 
-    /*
+    
     Picture this as a 3x5 rectangle where the middle pixel (index 7) correspond to (x, y)
       _ _ _ _ _
     | 0 1 2 3 4 |
     | 5 6 7 8 9 |
     | A B C D E |
       ‾ ‾ ‾ ‾ ‾
-    */
+    
     for (i = 0; i < 3 * 5; i++) {
         x1 = (i % 5) + x - 2;
         y1 = (i / 5) + y - 1;
@@ -467,7 +468,7 @@ void func_800C2500(PreRender* this, s32 x, s32 y) {
     pxOut.b = pxB3 >> 3;
     pxOut.a = 1;
     this->fbufSave[x + y * this->width] = pxOut.rgba;
-}
+}*/
 
 void func_800C2FE4(PreRender* this) {
     s32 x;
@@ -539,6 +540,83 @@ void func_800C2FE4(PreRender* this) {
     }
 }
 
+//By Thar0
+void PreRender_MotionBlurImpl(PreRender* this, Gfx** gfxp, void* buf, void* bufSave, s32 envR, s32 envG, s32 envB, s32 envA) {
+    Gfx* gfx = *gfxp;
+    uObjBg* bg;
+
+    gDPPipeSync(gfx++);
+
+    if (envA == 255) {
+        gDPSetOtherMode(gfx++,
+                        G_AD_DISABLE | G_CD_DISABLE | G_CK_NONE | G_TC_FILT | G_TF_POINT | G_TT_NONE | G_TL_TILE |
+                            G_TD_CLAMP | G_TP_NONE | G_CYC_1CYCLE | G_PM_NPRIMITIVE,
+                        G_AC_NONE | G_ZS_PRIM | G_RM_OPA_SURF | G_RM_OPA_SURF2);
+    } else {
+        gDPSetOtherMode(gfx++,
+                        G_AD_NOISE | G_CD_NOISE | G_CK_NONE | G_TC_FILT | G_TF_POINT | G_TT_NONE | G_TL_TILE |
+                            G_TD_CLAMP | G_TP_NONE | G_CYC_1CYCLE | G_PM_NPRIMITIVE,
+                        G_AC_NONE | G_ZS_PRIM | G_RM_CLD_SURF | G_RM_CLD_SURF2);
+    }
+
+    gDPSetEnvColor(gfx++, envR, envG, envB, envA);
+    gDPSetCombineLERP(gfx++, TEXEL0, 0, ENVIRONMENT, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, ENVIRONMENT, 0, 0, 0, 0,
+                      ENVIRONMENT);
+    gDPSetColorImage(gfx++, G_IM_FMT_RGBA, G_IM_SIZ_16b, this->width, bufSave);
+    gDPSetScissor(gfx++, G_SC_NON_INTERLACE, 0, 0, this->width, this->height);
+
+    // Setup BG Obj
+    bg = Graph_DlistAlloc(&gfx, sizeof(uObjBg));
+
+    bg->s.imageX = 0;
+    bg->s.imageW = this->width * 4 + 1;
+    bg->s.frameX = 0;
+
+    bg->s.imageY = 0;
+    bg->s.imageH = this->height * 4 + 1;
+    bg->s.frameY = 0;
+
+    bg->s.imagePtr = buf;
+    bg->s.imageLoad = G_BGLT_LOADTILE;
+    bg->s.imageFmt = G_IM_FMT_RGBA;
+    bg->s.imageSiz = G_IM_SIZ_16b;
+    bg->s.imagePal = 0;
+    bg->s.imageFlip = 0;
+
+    bg->s.frameW = this->width * 4;
+    bg->s.frameH = this->height * 4;
+    bg->s.scaleW = 1024;
+    bg->s.scaleH = 1024;
+    bg->s.imageYorig = bg->s.imageY;
+
+    // Load S2DEX
+    gSPLoadUcodeL(gfx++, gspS2DEX2d_fifo);
+    gDPPipeSync(gfx++);
+
+    gSPObjRenderMode(gfx++, G_OBJRM_ANTIALIAS | G_OBJRM_BILERP);
+    gSPBgRect1Cyc(gfx++, bg);
+    gDPPipeSync(gfx++);
+
+    // Reload F3DZEX
+    gSPLoadUcodeEx(gfx++, SysUcode_GetUCode(), SysUcode_GetUCodeData(), 0x800);
+    gDPPipeSync(gfx++);
+
+    gDPSetColorImage(gfx++, G_IM_FMT_RGBA, G_IM_SIZ_16b, this->width, this->fbuf);
+
+    *gfxp = gfx;
+}
+
+// TODO this could do with a better name but whatever
+void PreRender_MotionBlurOpaque(PreRender* this, Gfx** gfxP) {
+    if (this->fbuf != NULL && this->fbufSave != NULL) {
+        PreRender_MotionBlurImpl(this, gfxP, this->fbuf, this->fbufSave, 255, 255, 255, 255);
+    }
+}
+
+void PreRender_MotionBlur(PreRender* this, Gfx** gfxP, s32 alpha) {
+    PreRender_MotionBlurImpl(this, gfxP, this->fbufSave, this->fbuf, 255, 255, 255, alpha);
+}
+/*
 void PreRender_Calc(PreRender* this) {
     s32 x;
     s32 y;
@@ -561,4 +639,4 @@ void PreRender_Calc(PreRender* this) {
             func_800C2FE4(this);
         }
     }
-}
+}*/

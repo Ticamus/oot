@@ -7394,6 +7394,14 @@ beginseg
 endseg
 
 beginseg
+    name "memerrmsg"
+    compress
+    romalign 0x1000
+    include "build/assets/misc/memerrmsg/memerrmsg.o"
+    number 1
+endseg
+
+beginseg
     name "parameter_static"
     compress
     romalign 0x1000

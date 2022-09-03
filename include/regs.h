@@ -166,4 +166,7 @@
 #define R_EN_GOROIWA_SPEED                       mREG(12)
 #define R_NAVI_MSG_REGION_ALPHA                  nREG(87)
 
+#define R_MOTION_BLUR_ENABLED       SREG(92)
+#define R_MOTION_BLUR_ALPHA         SREG(93)
+
 #endif

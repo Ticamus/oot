@@ -75,6 +75,7 @@ DECLARE_OVERLAY_SEGMENT(map_mark_data)
 DECLARE_ROM_SEGMENT(z_select_static)
 DECLARE_ROM_SEGMENT(nintendo_rogo_static)
 DECLARE_ROM_SEGMENT(title_static)
+DECLARE_ROM_SEGMENT(memerrmsg) //CUSTOM
 DECLARE_ROM_SEGMENT(parameter_static)
 DECLARE_ROM_SEGMENT(vr_fine0_static)
 DECLARE_ROM_SEGMENT(vr_fine0_pal_static)

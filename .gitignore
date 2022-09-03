@@ -57,3 +57,6 @@ assets_vanilla/*
 
 # Per-user configuration
 .python-version
+cache/
+*.wad
+common-key.bin
