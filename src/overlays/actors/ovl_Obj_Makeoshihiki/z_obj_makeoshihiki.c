@@ -35,7 +35,7 @@ static BlockConfig sBlocks[] = {
       0xFF,
       PUSHBLOCK_LARGE_START_ON,
       0x0000 },
-    { { { -605.0f, -820.0f, -290.0f }, { -365.0f, -905.0f, -290.0f }, { -365.0f, -905.0f, -290.0f } },
+    { { { -682.0f, -163.0f, -1215.0f }, { -365.0f, -905.0f, -290.0f }, { -365.0f, -905.0f, -290.0f } },
       0x00,
       0x03,
       0x00,
@@ -50,20 +50,35 @@ static void (*sFlagSwitchFuncs[])(PlayState* play, s32 flag) = { Flags_UnsetSwit
 
 void ObjMakeoshihiki_Init(Actor* thisx, PlayState* play) {
     BlockConfig* block = &sBlocks[thisx->home.rot.z & 1];
-    s32 typeIdx;
-    Vec3f* spawnPos;
+    u8 BlockFinal = (thisx->home.rot.z) & 2;
+    u8 BlockFinalFlag;
+    
 
-    if (!((thisx->params >> 6) & 1) && Flags_GetSwitch(play, thisx->params & 0x3F)) {
-        typeIdx = 1;
-    } else if (!((thisx->params >> 0xE) & 1) && Flags_GetSwitch(play, (thisx->params >> 8) & 0x3F)) {
-        typeIdx = 2;
-    } else {
-        typeIdx = 0;
+    if (Flags_GetSwitch(play, thisx->params & 0x3F)) {
+        if (!BlockFinal) {
+            Actor_Kill(thisx);
+            return; 
+        }
+        osSyncPrintf("Block Final Switch oui oui oui\n");
+        BlockFinalFlag = true;
     }
 
-    spawnPos = &block->posVecs[typeIdx];
+    if (BlockFinal) {
+        osSyncPrintf("Block Final détécté\n");
+        if (BlockFinalFlag) {
+            if (Actor_SpawnAsChild(&play->actorCtx, thisx, play, ACTOR_OBJ_OSHIHIKI, thisx->home.pos.x, thisx->home.pos.y, thisx->home.pos.z, 0,
+                    block->rotY, 0, ((block->color << 6) & 0xC0) | (block->type & 0xF) | 0xFF00) == NULL) {
+                        ((ObjOshihiki*)thisx->child)->cantMove = true;
+                        return;
+                    }
+            
+        }
+        Actor_Kill(thisx);
+        return; 
+    }
 
-    if (Actor_SpawnAsChild(&play->actorCtx, thisx, play, ACTOR_OBJ_OSHIHIKI, spawnPos->x, spawnPos->y, spawnPos->z, 0,
+
+    if (Actor_SpawnAsChild(&play->actorCtx, thisx, play, ACTOR_OBJ_OSHIHIKI, thisx->home.pos.x, thisx->home.pos.y, thisx->home.pos.z, 0,
                            block->rotY, 0, ((block->color << 6) & 0xC0) | (block->type & 0xF) | 0xFF00) == NULL) {
         // "Push-pull block failure"
         osSyncPrintf(VT_COL(RED, WHITE));
@@ -72,9 +87,7 @@ void ObjMakeoshihiki_Init(Actor* thisx, PlayState* play) {
         Actor_Kill(thisx);
         return;
     }
-    if (block->unk_24[typeIdx] & 2) {
-        ((ObjOshihiki*)thisx->child)->cantMove = true;
-    }
+    
     thisx->world.rot.z = thisx->shape.rot.z = 0;
     osSyncPrintf("(%s)(arg_data %04xF)(angleZ %d)\n", "../z_obj_makeoshihiki.c", thisx->params, thisx->home.rot.z);
 }
@@ -87,7 +100,16 @@ void ObjMakeoshihiki_Draw(Actor* thisx, PlayState* play) {
     s32 cond;
     s32 cond2;
 
-    for (i = 0; i < 3; i++) {
+    if (thisx->child->world.pos.y < thisx->home.pos.y) {
+        func_80078884(NA_SE_SY_TRE_BOX_APPEAR);
+        osSyncPrintf("(child : %s)(home : %04xF)\n", &thisx->child->world.pos.y, &thisx->home.pos.y);
+        Flags_SetSwitch(play, thisx->params & 0x3F);
+        ((ObjOshihiki*)thisx->child)->cantMove = true;
+        Actor_Kill(thisx);
+        
+    }
+
+    /*for (i = 0; i < 3; i++) {
         if (Math3D_Vec3fDistSq(&thisx->child->world.pos, &block->posVecs[i]) < 0.001f) {
             if (block->unk_24[i] & 1) {
                 if ((thisx->params >> 6) & 1) {
@@ -126,5 +148,5 @@ void ObjMakeoshihiki_Draw(Actor* thisx, PlayState* play) {
 
             break;
         }
-    }
+    }*/
 }

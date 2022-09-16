@@ -7914,6 +7914,26 @@ beginseg
 endseg
 
 beginseg
+    name "ydan_room_3"
+    compress
+    romalign 0x1000
+    include "build/assets/scenes/dungeons/ydan/ydan_room_3_main.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_room_3_model_info.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_room_3_model.o"
+    number 3
+endseg
+
+beginseg
+    name "ydan_room_4"
+    compress
+    romalign 0x1000
+    include "build/assets/scenes/dungeons/ydan/ydan_room_4_main.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_room_4_model_info.o"
+    include "build/assets/scenes/dungeons/ydan/ydan_room_4_model.o"
+    number 3
+endseg
+
+beginseg
     name "ddan_scene"
     compress
     romalign 0x1000
