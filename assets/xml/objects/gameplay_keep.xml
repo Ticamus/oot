@@ -901,7 +901,6 @@
         <Texture Name="gRupeePinkTex" OutName="rupee_pink" Format="rgba16" Width="4" Height="4" Offset="0x421C0"/>
         <Texture Name="gRupeeOrangeTex" OutName="rupee_orange" Format="rgba16" Width="4" Height="4" Offset="0x421A0"/>
         <Texture Name="gRupeeSilverTex" OutName="rupee_silver" Format="rgba16" Width="4" Height="4" Offset="0x421E0"/>
-        <Texture Name="gRupeeBlackTex" OutName="rupee_black" Format="rgba16" Width="4" Height="4" Offset="0x42220"/>
         <DList Name="gRupeeDL" Offset="0x42440"/>
         <Texture Name="gRupeeLightRedTex" OutName="rupee_light_red" Format="rgba16" Width="4" Height="4" Offset="0x42510"/>
         <Texture Name="gUnknownStone1Tex" OutName="unknown_stone_1" Format="rgba16" Width="32" Height="32" Offset="0x42530"/>

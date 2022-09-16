@@ -11,8 +11,6 @@
         <DList Name="gGiRedRupeeOuterColorDL" Offset="0x0580"/>
         <DList Name="gGiPurpleRupeeOuterColorDL" Offset="0x05A0"/>
         <DList Name="gGiGoldRupeeOuterColorDL" Offset="0x05C0"/>
-        <DList Name="gGiGoldRupeeOuterColorDL" Offset="0x0710"/>
-        <DList Name="gGiGoldRupeeInnerColorDL" Offset="0x0730"/>
         <DList Name="gGiRupeeInnerDL" Offset="0x05E0"/>
         <DList Name="gGiRupeeOuterDL" Offset="0x06F0"/>
     </File>

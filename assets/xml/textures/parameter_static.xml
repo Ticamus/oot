@@ -56,12 +56,5 @@
         <Texture Name="gMagicMeterEndTex" OutName="magic_meter_end" Format="ia8" Width="8" Height="16" Offset="0x38C0"/>
         <Texture Name="gMagicMeterMidTex" OutName="magic_meter_mid" Format="ia8" Width="24" Height="16" Offset="0x3940"/>
         <Texture Name="gMagicMeterFillTex" OutName="magic_meter_fill" Format="ia8" Width="8" Height="8" Offset="0x3AC0"/>
-
-        <Texture Name="gHeartQuarterTexMM" OutName="mm_heart_quarter" Format="ia8" Width="16" Height="16" Offset="0x3BC0"/>
-        <Texture Name="gHeartHalfTexMM" OutName="mm_heart_half" Format="ia8" Width="16" Height="16" Offset="0x3CC0"/>
-        <Texture Name="gHeartThreeQuarterTexMM" OutName="mm_heart_three_quarter" Format="ia8" Width="16" Height="16" Offset="0x3DC0"/>
-        <Texture Name="gHeartFullTexMM" OutName="mm_heart_full" Format="ia8" Width="16" Height="16" Offset="0x3EC0"/>
-        <Texture Name="gButtonBackgroundTexMM" OutName="mm_button_background" Format="ia8" Width="32" Height="32" Offset="0x3FC0"/>
-        <Texture Name="gSmallKeyCounterIconTexMM" OutName="mm_button_background" Format="ia8" Width="16" Height="16" Offset="0x42C0"/>
     </File>
 </Root>
