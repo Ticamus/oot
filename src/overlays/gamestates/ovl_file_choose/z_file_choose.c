@@ -305,11 +305,11 @@ void FileSelect_UpdateMainMenu(GameState* thisx) {
             }
         }
     } else {
-        if ((ABS(this->stickRelY) > 30) || (CHECK_BTN_ALL(input->press.button, BTN_DUP) || (CHECK_BTN_ALL(input->press.button, BTN_DDOWN)))) {
+        if ((ABS(this->stickAdjY) > 30) || (CHECK_BTN_ALL(input->press.button, BTN_DUP) || (CHECK_BTN_ALL(input->press.button, BTN_DDOWN)))) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                  &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 
-            if ((this->stickRelY > 30) || (CHECK_BTN_ALL(input->press.button, BTN_DUP))) {
+            if ((this->stickAdjY > 30) || (CHECK_BTN_ALL(input->press.button, BTN_DUP))) {
                 this->buttonIndex--;
                 if (this->buttonIndex < FS_BTN_MAIN_FILE_1) {
                     this->buttonIndex = FS_BTN_MAIN_OPTIONS;
@@ -1405,7 +1405,7 @@ void FileSelect_ConfirmFile(GameState* thisx) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         this->selectMode++;
-    } else if ((ABS(this->stickRelY) >= 30) || CHECK_BTN_ALL(input->press.button, BTN_DUP) || CHECK_BTN_ALL(input->press.button, BTN_DDOWN)) {
+    } else if ((ABS(this->stickAdjY) >= 30) || CHECK_BTN_ALL(input->press.button, BTN_DUP) || CHECK_BTN_ALL(input->press.button, BTN_DDOWN)) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         this->confirmButtonIndex ^= 1;
@@ -1679,28 +1679,28 @@ void FileSelect_Main(GameState* thisx) {
 
     Gfx_SetupFrame(this->state.gfxCtx, 0, 0, 0);
 
-    this->stickRelX = input->rel.stick_x;
-    this->stickRelY = input->rel.stick_y;
+    this->stickAdjX = input->rel.stick_x;
+    this->stickAdjY = input->rel.stick_y;
 
-    if ((this->stickRelX < -30)) {
+    if (this->stickAdjX < -30) {
         if (this->stickXDir == -1) {
             this->inputTimerX--;
             if (this->inputTimerX < 0) {
                 this->inputTimerX = 2;
             } else {
-                this->stickRelX = 0;
+                this->stickAdjX = 0;
             }
         } else {
             this->inputTimerX = 10;
             this->stickXDir = -1;
         }
-    } else if (this->stickRelX > 30) {
+    } else if (this->stickAdjX > 30) {
         if (this->stickXDir == 1) {
             this->inputTimerX--;
             if (this->inputTimerX < 0) {
                 this->inputTimerX = 2;
             } else {
-                this->stickRelX = 0;
+                this->stickAdjX = 0;
             }
         } else {
             this->inputTimerX = 10;
@@ -1710,25 +1710,25 @@ void FileSelect_Main(GameState* thisx) {
         this->stickXDir = 0;
     }
 
-    if (this->stickRelY < -30) {
+    if (this->stickAdjY < -30) {
         if (this->stickYDir == -1) {
             this->inputTimerY -= 1;
             if (this->inputTimerY < 0) {
                 this->inputTimerY = 2;
             } else {
-                this->stickRelY = 0;
+                this->stickAdjY = 0;
             }
         } else {
             this->inputTimerY = 10;
             this->stickYDir = -1;
         }
-    } else if (this->stickRelY > 30) {
+    } else if (this->stickAdjY > 30) {
         if (this->stickYDir == 1) {
             this->inputTimerY -= 1;
             if (this->inputTimerY < 0) {
                 this->inputTimerY = 2;
             } else {
-                this->stickRelY = 0;
+                this->stickAdjY = 0;
             }
         } else {
             this->inputTimerY = 10;
