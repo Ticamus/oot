@@ -141,7 +141,7 @@ void BoxWarp_Open(BoxWarp* this, PlayState* play) {
 
     
     
-    anim = (LINK_IS_CHILD) ? &gPlayerAnim_002310  : &gPlayerAnim_002710;
+    anim = (LINK_IS_CHILD) ? &gPlayerAnim_clink_demo_DDbox_open  : &gPlayerAnim_link_demo_DDbox_open;
 
     osSyncPrintf("chestwarp->1F4=%d\n", this->unk_1F4);
 

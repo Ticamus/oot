@@ -720,7 +720,7 @@ void FileSelect_UpdateOptionsMenu(GameState* thisx) {
         }
     }
 
-    if ((ABS(this->stickRelY) > 30) || (CHECK_BTN_ALL(input->press.button, BTN_DUP) || (CHECK_BTN_ALL(input->press.button, BTN_DDOWN)))) {
+    if ((ABS(this->stickAdjY) > 30) || (CHECK_BTN_ALL(input->press.button, BTN_DUP) || (CHECK_BTN_ALL(input->press.button, BTN_DDOWN)))) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         sSelectedSetting ^= 1;
