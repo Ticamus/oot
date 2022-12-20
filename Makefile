@@ -7,13 +7,16 @@ SHELL = /bin/bash
 # Build options can either be changed by modifying the makefile, or by building with 'make SETTING=value'
 
 # If COMPARE is 1, check the output md5sum after building
-COMPARE ?= 1
+COMPARE ?= 0
 # If NON_MATCHING is 1, define the NON_MATCHING C flag when building
 NON_MATCHING ?= 1
 # If ORIG_COMPILER is 1, compile with QEMU_IRIX and the original compiler
 ORIG_COMPILER ?= 0
 # If COMPILER is "gcc", compile with GCC instead of IDO.
 COMPILER ?= ido
+
+# If DEBUG_BUILD is 1, compile with DEBUG_ROM defined
+DEBUG_BUILD ?= 1
 
 CFLAGS ?=
 CPPFLAGS ?=
@@ -31,15 +34,40 @@ ifeq ($(COMPILER),gcc)
   NON_MATCHING := 1
 endif
 
+ifeq ($(DEBUG_BUILD),1)
+  CFLAGS += -DDEBUG_ROM
+  CPPFLAGS += -DDEBUG_ROM
+endif
+
+# Set PACKAGE_VERSION define for printing commit hash
+ifeq ($(origin PACKAGE_VERSION), undefined)
+  PACKAGE_VERSION := $(shell git log -1 --pretty=%h | tr -d '\n')
+  ifeq ('$(PACKAGE_VERSION)', '')
+    PACKAGE_VERSION = Unknown version
+  endif
+endif
+
+# Set PACKAGE_AUTHOR define for printing author's git name
+ifeq ($(origin PACKAGE_AUTHOR), undefined)
+  PACKAGE_AUTHOR := $(shell git config --get user.name)
+  ifeq ('$(PACKAGE_AUTHOR)', '')
+    PACKAGE_AUTHOR = Ticamus
+  endif
+endif
+
 # Set prefix to mips binutils binaries (mips-linux-gnu-ld => 'mips-linux-gnu-') - Change at your own risk!
 # In nearly all cases, not having 'mips-linux-gnu-*' binaries on the PATH is indicative of missing dependencies
 MIPS_BINUTILS_PREFIX ?= mips-linux-gnu-
 
-ifeq ($(NON_MATCHING),1)
-  CFLAGS += -DNON_MATCHING -DAVOID_UB
-  CPPFLAGS += -DNON_MATCHING -DAVOID_UB
-  COMPARE := 0
-endif
+CFLAGS += -DNON_MATCHING -DAVOID_UB
+CPPFLAGS += -DNON_MATCHING -DAVOID_UB
+
+CFLAGS += -DPACKAGE_VERSION='$(PACKAGE_VERSION)'
+CPPFLAGS += -DPACKAGE_VERSION='$(PACKAGE_VERSION)'
+CFLAGS += -DPACKAGE_AUTHOR='$(PACKAGE_AUTHOR)'
+CPPFLAGS += -DPACKAGE_AUTHOR='$(PACKAGE_AUTHOR)'
+# Make sure the build reports the correct version
+# $(shell touch src/boot/build.c)
 
 PROJECT_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 

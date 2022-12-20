@@ -6369,10 +6369,10 @@ s32 Camera_Demo9(Camera* camera) {
         case 2:
             // standby while the timer finishes, change the animState to finish when
             // the timer runs out.
-            rwData->animTimer--;
-            if (rwData->animTimer < 0) {
-                camera->animState++;
-            }
+            //rwData->animTimer--;
+            //if (rwData->animTimer < 0) {
+            camera->animState++;
+            //}
             break;
         case 4:
             // do nothing.

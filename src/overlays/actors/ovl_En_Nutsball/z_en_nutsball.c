@@ -99,6 +99,33 @@ void func_80ABBBA8(EnNutsball* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
     Vec3s sp4C;
     Vec3f sp40;
+    Vec3f hitPoint;
+    s32 bgId;
+    s32 atTouched;
+
+GfxPrint printer;
+Gfx* gfx;
+
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+
+    gfx = POLY_OPA_DISP + 1;
+    gSPDisplayList(OVERLAY_DISP++, gfx);
+
+    GfxPrint_Init(&printer);
+    GfxPrint_Open(&printer, gfx);
+
+    GfxPrint_SetColor(&printer, 255, 0, 255, 255);
+    GfxPrint_SetPos(&printer, 10, 10);
+    GfxPrint_Printf(&printer, "%.8X", this->actor.world.pos);
+    GfxPrint_SetPos(&printer, 10, 11);
+    GfxPrint_Printf(&printer, "%.8X", this->actor.prevPos);
+    //Actor_MoveForward(&this->actor);
+     GfxPrint_SetPos(&printer, 10, 12);
+    GfxPrint_Printf(&printer, "%.8X", this->actor.world.pos);
+    GfxPrint_SetPos(&printer, 10, 13);
+    GfxPrint_Printf(&printer, "%.8X", this->actor.prevPos);
+
+    
 
     this->timer--;
 
@@ -107,8 +134,20 @@ void func_80ABBBA8(EnNutsball* this, PlayState* play) {
     }
 
     this->actor.home.rot.z += 0x2AA8;
+    atTouched = (this->collider.base.atFlags & AT_HIT);
+    
+    GfxPrint_SetPos(&printer, 10, 14);
+    GfxPrint_Printf(&printer, "%.8X", this->touchedPoly);
 
-    if ((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) || (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) ||
+    gfx = GfxPrint_Close(&printer);
+    GfxPrint_Destroy(&printer);
+
+    gSPEndDisplayList(gfx++);
+    gSPBranchList(POLY_OPA_DISP, gfx);
+    POLY_OPA_DISP = gfx;
+
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+    if ( this->touchedPoly ||
         (this->collider.base.atFlags & AT_HIT) || (this->collider.base.acFlags & AC_HIT) ||
         (this->collider.base.ocFlags1 & OC1_HIT)) {
         // Checking if the player is using a shield that reflects projectiles
@@ -117,6 +156,7 @@ void func_80ABBBA8(EnNutsball* this, PlayState* play) {
             ((player->currentShield == PLAYER_SHIELD_HYLIAN) && LINK_IS_ADULT)) {
             if ((this->collider.base.atFlags & AT_HIT) && (this->collider.base.atFlags & AT_TYPE_ENEMY) &&
                 (this->collider.base.atFlags & AT_BOUNCED)) {
+                
                 this->collider.base.atFlags &= ~AT_TYPE_ENEMY & ~AT_BOUNCED & ~AT_HIT;
                 this->collider.base.atFlags |= AT_TYPE_PLAYER;
 
@@ -140,6 +180,8 @@ void func_80ABBBA8(EnNutsball* this, PlayState* play) {
             Actor_Kill(&this->actor);
         }
     }
+    this->touchedPoly = BgCheck_EntityLineTest1(&play->colCtx, &this->PrevPrevPos, &this->actor.world.pos, &hitPoint,
+                                            &this->actor.wallPoly, true, true, true, true, &bgId);
 }
 
 void EnNutsball_Update(Actor* thisx, PlayState* play) {
@@ -149,9 +191,13 @@ void EnNutsball_Update(Actor* thisx, PlayState* play) {
 
     if (!(player->stateFlags1 & (PLAYER_STATE1_6 | PLAYER_STATE1_7 | PLAYER_STATE1_28 | PLAYER_STATE1_29)) ||
         (this->actionFunc == func_80ABBB34)) {
+        
         this->actionFunc(this, play);
-
+        this->PrevPrevPos = this->actor.prevPos;
         Actor_MoveForward(&this->actor);
+        
+
+        
         Actor_UpdateBgCheckInfo(play, &this->actor, 10, sCylinderInit.dim.radius, sCylinderInit.dim.height,
                                 UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2);
         Collider_UpdateCylinder(&this->actor, &this->collider);

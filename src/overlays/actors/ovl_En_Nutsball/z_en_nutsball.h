@@ -14,6 +14,8 @@ typedef struct EnNutsball {
     /* 0x0150 */ s8 objBankIndex;
     /* 0x0152 */ s16 timer;
     /* 0x0154 */ ColliderCylinder collider;
+    /* 0x024A */ u8 touchedPoly;
+                Vec3f PrevPrevPos;
 } EnNutsball; // size = 0x01A0
 
 #endif

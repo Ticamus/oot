@@ -1,6 +1,7 @@
 #include "file_select.h"
 #include "assets/textures/title_static/title_static.h"
 #include "assets/textures/parameter_static/parameter_static.h"
+#include "config.h"
 
 static s16 sUnused = 106;
 
@@ -1510,7 +1511,7 @@ void FileSelect_LoadGame(GameState* thisx) {
     FileSelectState* this = (FileSelectState*)thisx;
     u16 swordEquipValue;
     s32 pad;
-
+#if (!defined BOOT_TO_SCENE && !defined BOOT_TO_FILE_SELECT)
     if (this->buttonIndex == FS_BTN_SELECT_FILE_1) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
@@ -1520,6 +1521,7 @@ void FileSelect_LoadGame(GameState* thisx) {
         SET_NEXT_GAMESTATE(&this->state, MapSelect_Init, MapSelectState);
         this->state.running = false;
     } else {
+#endif
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         gSaveContext.fileNum = this->buttonIndex;
@@ -1527,8 +1529,9 @@ void FileSelect_LoadGame(GameState* thisx) {
         gSaveContext.gameMode = GAMEMODE_NORMAL;
         SET_NEXT_GAMESTATE(&this->state, Play_Init, PlayState);
         this->state.running = false;
+#if (!defined BOOT_TO_SCENE && !defined BOOT_TO_FILE_SELECT)
     }
-
+#endif
     gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = ENTR_LOAD_OPENING;
     gSaveContext.respawnFlag = 0;
     gSaveContext.seqId = (u8)NA_BGM_DISABLED;
@@ -1549,10 +1552,17 @@ void FileSelect_LoadGame(GameState* thisx) {
     gSaveContext.forcedSeqId = NA_BGM_GENERAL_SFX;
     gSaveContext.skyboxTime = CLOCK_TIME(0, 0);
     gSaveContext.nextTransitionType = TRANS_NEXT_TYPE_DEFAULT;
+ #if (defined BOOT_TO_SCENE && !defined BOOT_TO_SCENE_NEW_GAME_ONLY)
+    gSaveContext.nextCutsceneIndex = BOOT_CUTSCENE;
+    gSaveContext.cutsceneTrigger = 0;
+    gSaveContext.chamberCutsceneNum = 0;
+    gSaveContext.nextDayTime = BOOT_TIME;
+#else
     gSaveContext.nextCutsceneIndex = 0xFFEF;
     gSaveContext.cutsceneTrigger = 0;
     gSaveContext.chamberCutsceneNum = 0;
     gSaveContext.nextDayTime = NEXT_TIME_NONE;
+#endif
     gSaveContext.retainWeatherMode = false;
 
     gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
@@ -1583,6 +1593,18 @@ void FileSelect_LoadGame(GameState* thisx) {
         gSaveContext.equips.equipment &= gEquipNegMasks[EQUIP_TYPE_SWORD];
         gSaveContext.inventory.equipment ^= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, swordEquipValue - 1);
     }
+#ifdef BOOT_TO_SCENE
+    if (!SLOT_OCCUPIED((&this->sramCtx), this->buttonIndex)) {
+        u8 name[] = { BOOT_PLAYER_NAME };
+        this->n64ddFlag = 0;
+        MemCpy(&this->fileNames[this->buttonIndex][0], &name, sizeof(name));
+        Sram_InitSave(this, &this->sramCtx);
+    }
+#ifndef BOOT_TO_SCENE_NEW_GAME_ONLY
+    gSaveContext.entranceIndex = BOOT_ENTRANCE;
+    gSaveContext.linkAge = BOOT_AGE;
+#endif
+#endif
 }
 
 static void (*gSelectModeUpdateFuncs[])(GameState*) = {
@@ -1966,5 +1988,9 @@ void FileSelect_Init(GameState* thisx) {
     FileSelect_InitContext(&this->state);
     Font_LoadOrderedFont(&this->font);
     Audio_QueueSeqCmd(0xF << 28 | SEQ_PLAYER_BGM_MAIN << 24 | 0xA);
+#ifdef BOOT_TO_SCENE
+    FileSelect_LoadGame(thisx);
+#else
     func_800F5E18(SEQ_PLAYER_BGM_MAIN, NA_BGM_FILE_SELECT, 0, 7, 1);
+#endif
 }

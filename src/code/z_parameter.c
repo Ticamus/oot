@@ -3184,6 +3184,12 @@ void Interface_Draw(PlayState* play) {
     s16 svar5;
     s16 svar6;
     s32 i;
+    u8 walletUpg = CUR_UPG_VALUE(UPG_WALLET);
+    static Color_RGB8 const walletColors[] = {
+            { 200, 255, 100 },
+            { 130, 130, 255 },
+            { 255, 100, 100 },
+        };
 
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 3405);
 
@@ -3206,7 +3212,10 @@ void Interface_Draw(PlayState* play) {
             OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gRupeeCounterIconTex, 16, 16, 26+2, 206+2, 16+2, 16+2, 1 << 10, 1 << 10);
         }
 
-        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 200, 255, 100, interfaceCtx->magicAlpha);
+        
+
+        
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, walletColors[walletUpg].r, walletColors[walletUpg].g, walletColors[walletUpg].b, interfaceCtx->magicAlpha);
         OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gRupeeCounterIconTex, 16, 16, 26, 206, 16, 16, 1 << 10, 1 << 10);
 
         switch (play->sceneId) {
